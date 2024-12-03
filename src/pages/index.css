@@ -1,0 +1,24 @@
+.landingpage {
+    width: 100dvw;
+    height: fit-content;
+    min-height: 100dvh;
+}
+
+.marketplace {
+    width: 100dvw;
+    height: fit-content;
+    min-height: 100dvh;
+}
+
+.login {
+    width: 100dvw;
+    height: fit-content;
+    min-height: 100dvh;
+}
+
+.bg-image-landing {
+    background: url("C:\\Users\\KIIT\\Desktop\\Internships\\Stearn\\src\\assets\\27059.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;  
+}
