@@ -1,31 +1,10 @@
-import { Navbar, NavbarContent, NavbarItem, Link, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, NavbarBrand, Button, DropdownItem, DropdownMenu, DropdownTrigger, Dropdown } from "@nextui-org/react";
-import { useState } from "react";
+import { Navbar, NavbarContent, NavbarItem, Link, NavbarMenuToggle, NavbarBrand} from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
-import { ChevronDown, Lock, Activity, Flash, Server, TagUser, Scale } from "./Icons.jsx";
 import "./index.css";
 import { Layers } from "lucide-react";
 
 export default function CustomNavbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
-
-  const menuItems = [
-    "Products",
-    "Partnerships",
-    "Security",
-    "About",
-    "Blog",
-  ];
-
-  const icons = {
-    chevron: <ChevronDown fill="currentColor" size={16} />,
-    scale: <Scale className="text-warning" fill="currentColor" size={30} />,
-    lock: <Lock className="text-success" fill="currentColor" size={30} />,
-    activity: <Activity className="text-secondary" fill="currentColor" size={30} />,
-    flash: <Flash className="text-primary" fill="currentColor" size={30} />,
-    server: <Server className="text-success" fill="currentColor" size={30} />,
-    user: <TagUser className="text-danger" fill="currentColor" size={30} />,
-  };
 
   const styles = {
     secondaryButton: {
@@ -61,95 +40,27 @@ export default function CustomNavbar() {
   };
 
   return (
-    <Navbar className="absolute top-0" onMenuOpenChange={setIsMenuOpen}>
+    <Navbar className="absolute top-0">
       <NavbarContent>
-        <NavbarMenuToggle
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          className="sm:hidden"
-          style={styles.navbarMenuToggle}
-        />
         <NavbarBrand>
           <Layers color="white" />
           <div className="cursor-pointer m-0 p-0 hover:scale-[1.05] transition-transform duration-200 ease-in-out" onClick={() => { navigate("/") }} style={styles.navbarBrand}>Stearn</div>
         </NavbarBrand>
 
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
-          <Dropdown>
-            <NavbarItem>
-              <DropdownTrigger>
-                <Button
-                  disableRipple
-                  className="p-0 data-[hover=true]:bg-transparent"
-                  endContent={icons.chevron}
-                  radius="sm"
-                  variant="light"
-                >
-                  Products
-                </Button>
-              </DropdownTrigger>
-            </NavbarItem>
-            <DropdownMenu
-              aria-label="ACME features"
-              className="w-[340px]"
-              itemClasses={{
-                base: "gap-4",
-              }}
-            >
-              <DropdownItem
-                key="autoscaling"
-                description="ACME scales apps to meet user demand, automagically, based on load."
-                startContent={icons.scale}
-              >
-                Autoscaling
-              </DropdownItem>
-              <DropdownItem
-                key="usage_metrics"
-                description="Real-time metrics to debug issues. Slow query added? We’ll show you exactly where."
-                startContent={icons.activity}
-              >
-                Usage Metrics
-              </DropdownItem>
-              <DropdownItem
-                key="production_ready"
-                description="ACME runs on ACME, join us and others serving requests at web scale."
-                startContent={icons.flash}
-              >
-                Production Ready
-              </DropdownItem>
-              <DropdownItem
-                key="99_uptime"
-                description="Applications stay on the grid with high availability and high uptime guarantees."
-                startContent={icons.server}
-              >
-                +99% Uptime
-              </DropdownItem>
-              <DropdownItem
-                key="supreme_support"
-                description="Overcome any challenge with a supporting team ready to respond."
-                startContent={icons.user}
-              >
-                +Supreme Support
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
           <NavbarItem>
-            <Link color="foreground" href="#">
-              DEX Partnerships
+            <Link color="foreground" href="#products">
+              Product Suite
             </Link>
           </NavbarItem>
           <NavbarItem>
-            <Link color="foreground" href="#">
-              Security
+            <Link color="foreground" href="#features">
+              Features
             </Link>
           </NavbarItem>
           <NavbarItem>
-            <Link color="foreground" href="#">
-              About
-            </Link>
-          </NavbarItem>
-          <NavbarItem>
-            <Link color="foreground" href="#">
-              Blog
+            <Link color="foreground" href="#faq">
+              FAQ
             </Link>
           </NavbarItem>
         </NavbarContent>
@@ -177,30 +88,12 @@ export default function CustomNavbar() {
             </li>
           </NavbarItem>
 
-
-          <NavbarItem>
-            <Button color="white" href="#" variant="bordered" >
-              Learn More
-            </Button>
-          </NavbarItem>
         </NavbarContent>
 
 
 
       </NavbarContent>
 
-      <NavbarMenu style={styles.navbarMenu}>
-        {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item}-${index}`}>
-            <Link
-              style={styles.navbarMenuItemLink}
-              href="#"
-            >
-              {item}
-            </Link>
-          </NavbarMenuItem>
-        ))}
-      </NavbarMenu>
     </Navbar>
   );
 }

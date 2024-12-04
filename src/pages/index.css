@@ -17,7 +17,12 @@
 }
 
 .bg-image-landing {
-    background: url("https://raw.githubusercontent.com/pramitbhatia25/Stearn/refs/heads/main/src/assets/27059.jpg");
+    background: 
+        linear-gradient(
+            rgba(0, 0, 0, 0.4), 
+            rgba(0, 0, 0, 0.4)
+        ), 
+        url("https://raw.githubusercontent.com/pramitbhatia25/Stearn/refs/heads/main/src/assets/27059.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;  
