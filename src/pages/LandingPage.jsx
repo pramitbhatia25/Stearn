@@ -1,12 +1,13 @@
 import CustomNavbar from "../components/Navbar";
 import "./index.css";
-import { Accordion, AccordionItem, Button, Card, CardBody, CardFooter, Image, CardHeader, Chip, Input, Skeleton, Spacer } from '@nextui-org/react';
+import { Accordion, AccordionItem, Button, Card, CardBody, CardFooter, Image, CardHeader, Input, Skeleton, Spacer } from '@nextui-org/react';
 import { useEffect, useState } from "react";
 import { features, subfeatures } from "../data/features"
 import { MailIcon } from "../components/MailIcon";
 import register from "../components/register";
 import { SquareArrowOutUpRight, CircleChevronDown } from "lucide-react"
 import image from "../assets/small.png"
+import Trade from "./Trade";
 
 function LandingPage() {
 
@@ -63,24 +64,8 @@ function LandingPage() {
             <div className="h-auto bg-image-landing flex flex-col md:flex-row">
                 <div className="flex flex-col items-center md:items-start justify-center w-full md:w-[65%] mx-auto md:pl-10 min-h-[90vh] md:min-h-[100vh]">
 
-                    <div className="flex m-5 md:mx-0 gap-2 border border-black p-1 bg-[#1a1a1a] rounded-full items-center">
-                        <Chip
-                            variant="shadow"
-                            classNames={{
-                                base: "bg-gradient-to-br from-purple-500 to-purple-200 border-small border-white/50 shadow-purple-500/30",
-                                content: "drop-shadow shadow-black text-black",
-                            }}
-                        >
-                            New
-                        </Chip>
-                        <div className="flex justify-center items-center text-center px-2">
-                            Launching Spring 2025
-                        </div>
-                    </div>
 
-                    <Spacer y={5} />
-
-                    <div className="text-4xl md:text-5xl w-5/5 font-bold flex flex-wrap justify-center text-center md:justify-start md:text-left">
+                    <div className="text-4xl text-white md:text-5xl w-5/5 font-bold flex flex-wrap justify-center text-center md:justify-start md:text-left">
                         Swap and stake crypto on <span className="text-purple-400 mx-3">any</span> chain,
                         <span className="text-purple-400 mx-3">any</span> protocol,
                         <span className="text-purple-400 mx-3">any</span>time
@@ -88,7 +73,7 @@ function LandingPage() {
 
                     <Spacer y={5} />
 
-                    <div className="text-lg  w-4/5 md:w-1/2  justify-center text-center md:justify-start md:text-left w-4/5">
+                    <div className="text-white text-lg  w-4/5 md:w-1/2  justify-center text-center md:justify-start md:text-left w-4/5">
                         Empowering developers with a robust suite of APIs, SDKs, and tools to create seamless single-chain and cross-chain solutions.
                     </div>
 
@@ -121,12 +106,8 @@ function LandingPage() {
 
                 </div>
 
-                <div className="flex flex-col items-center justify-center w-full md:w-[35%] mx-auto min-h-[40vh]">
-                    <Image
-                        alt="Card background"
-                        className="w-[90%] h-[300px] object-contain p-2 m-5 bg-white "
-                        src={image}
-                    />
+                <div className="light flex flex-col items-center justify-center w-full md:w-[35%] mx-auto min-h-[40vh]">
+                    <Trade />
                 </div>
             </div>
             <Spacer y={5} id="products" />
