@@ -22,9 +22,6 @@ export default {
   },
   darkMode: "class",
   plugins: [
-    require("@tailwindcss/typography"),
-    require('@tailwindcss/aspect-ratio'),
-    require('@tailwindcss/forms')({ strategy: 'class' }),
     nextui()
   ],
 }
