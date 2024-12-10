@@ -1,12 +1,12 @@
-import CustomNavbar from "../components/Navbar";
+import CustomNavbar from "../../components/Navbar";
 import "./index.css";
 import { Accordion, AccordionItem, Button, Card, CardBody, CardFooter, Image, CardHeader, Input, Skeleton, Spacer } from '@nextui-org/react';
 import { useEffect, useState } from "react";
-import { features, subfeatures } from "../data/features"
-import { MailIcon } from "../components/MailIcon";
-import register from "../components/register";
+import { features, subfeatures } from "../../data/features"
+import { MailIcon } from "../../components/MailIcon";
+import register from "../../components/register";
 import { SquareArrowOutUpRight, CircleChevronDown } from "lucide-react"
-import Trade from "./Trade";
+import Trade from "../Trade";
 
 function LandingPage() {
 

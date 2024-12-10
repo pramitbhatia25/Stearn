@@ -1,14 +1,12 @@
-import CustomNavbar from "../components/Navbar";
+import CustomNavbar from "../../components/Navbar";
 import "./index.css";
 import { Accordion, AccordionItem, Button, Card, CardBody, CardFooter, Image, CardHeader, Input, Skeleton, Spacer } from '@nextui-org/react';
 import { useEffect, useState } from "react";
-import { features, subfeatures } from "../data/features"
-import { MailIcon } from "../components/MailIcon";
-import register from "../components/register";
+import { MailIcon } from "../../components/MailIcon";
+import register from "../../components/register";
 import { SquareArrowOutUpRight, CircleChevronDown } from "lucide-react"
-import Trade from "./Trade";
 
-function LandingPage() {
+function Home() {
 
     const [isLoaded, setIsLoaded] = useState(false);
     const [registerLoading, setRegisterLoading] = useState(false);
@@ -56,8 +54,6 @@ function LandingPage() {
 
         <div className="landingpage">
 
-            <CustomNavbar />
-
             <div className="h-auto bg-image-landing">
                 <div className="flex flex-col md:flex-row max-w-[1800px] mx-auto">
                     <div className="flex flex-col items-center md:items-start justify-center w-full md:w-[65%] mx-auto md:pl-10 min-h-[90vh] md:min-h-[100vh]">
@@ -104,9 +100,6 @@ function LandingPage() {
 
                     </div>
 
-                    <div className="light flex flex-col items-center justify-center w-full md:w-[35%] mx-auto min-h-[40vh]">
-                        <Trade />
-                    </div>
                 </div>
             </div>
             <Spacer y={5} id="products" />
@@ -118,43 +111,6 @@ function LandingPage() {
                 </div>
 
                 <Spacer y={5} />
-
-                <div className="max-w-[1200px] mx-auto flex flex-col gap-10">
-                    {/* Top Row: Features */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 auto-rows-fr m-5">
-                        {features.map((feature, index) => (
-                            <Skeleton className="cursor-default rounded-lg h-full" key={index} isLoaded={isLoaded}>
-                                <Card className="cursor-default h-full flex flex-col justify-between max-w-[500px] hover:scale-[1.05] transition-transform duration-200 ease-in-out">
-                                    <CardHeader className="flex gap-3 items-center">
-                                        <div style={{ height: "30px", width: "30px" }}>
-                                            {feature.icon}
-                                        </div>
-                                        <div className="flex flex-col">
-                                            <p className="text-xl font-semibold">{feature.title}</p>
-                                        </div>
-                                    </CardHeader>
-                                    <CardBody>
-                                        <p className="text-md text-ellipsis line-clamp-5">{feature.description}</p>
-                                    </CardBody>
-                                    <CardFooter className="flex flex-col items-center">
-                                        <Image
-                                            alt="Card background"
-                                            className="w-full h-[200px] object-contain rounded-md"
-                                            src="https://nextui.org/images/hero-card-complete.jpeg"
-                                        />
-                                        <div className="flex gap-2">
-                                            <Button className="mt-5" radius="full" size="md">Learn More</Button>
-                                            <Button className="mt-5" radius="full" size="md">
-                                                Documentation <SquareArrowOutUpRight color="gray" size={20} />
-                                            </Button>
-                                        </div>
-                                    </CardFooter>
-                                </Card>
-                            </Skeleton>
-                        ))}
-                    </div>
-                </div>
-
             </div>
 
             <Spacer y={5} id="features" />
@@ -168,24 +124,6 @@ function LandingPage() {
 
                 <div className="max-w-[1200px] mx-auto flex flex-col gap-10">
 
-                    {/* Bottom Row: Subfeatures */}
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-5 auto-rows-fr m-5">
-                        {subfeatures.map((subfeature, index) => (
-                            <Skeleton className="cursor-default rounded-lg h-full" key={index} isLoaded={isLoaded}>
-                                <Card className="cursor-default rounded-lg min-h-[250px] flex flex-col items-center p-2 rounded-lg hover:scale-[1.05] transition-transform duration-200 ease-in-out">
-                                    <CardHeader className="flex gap-1 items-start justify-start">
-                                        <div style={{ height: "20px", width: "20px" }} className="flex items-center justify-center text-center">
-                                            {subfeature.icon}
-                                        </div>
-                                        <p className="text-sm font-semibold text-center">{subfeature.title}</p>
-                                    </CardHeader>
-                                    <CardBody className="flex-1 text-sm">
-                                        <div>{subfeature.description}</div>
-                                    </CardBody>
-                                </Card>
-                            </Skeleton>
-                        ))}
-                    </div>
                 </div>
 
             </div>
@@ -272,4 +210,4 @@ function LandingPage() {
     );
 }
 
-export default LandingPage;
+export default Home;

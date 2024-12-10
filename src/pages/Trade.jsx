@@ -52,8 +52,8 @@ const Trade = () => {
     const [loading, setLoading] = useState(true);
     const [fromValue, setFromValue] = useState(new Set(["BTC"]));
     const [toValue, setToValue] = useState(new Set(["SOL"]));
-    const [fromAmount, setFromAmount] = useState(0.0);
-    const [toAmount, setToAmount] = useState(0.0);
+    const [fromAmount, setFromAmount] = useState();
+    const [toAmount, setToAmount] = useState();
 
     const content = (
         <PopoverContent>
@@ -131,7 +131,7 @@ const Trade = () => {
 
 
     return (
-            <Card className="w-[350px] h-[300px] border border-gray-900">
+            <Card className="light w-[350px] h-[300px] border border-gray-900">
             {loading ? (
                 <div className="flex items-center justify-center h-full w-full">
                     <div className="flex flex-col items-center gap-2">

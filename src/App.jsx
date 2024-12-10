@@ -1,8 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import "./app.css";
-import Login from "./pages/Login";
-import Trade from "./pages/Trade";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
 
@@ -10,8 +9,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/trade" element={<Trade />}></Route>
+        <Route path="/dashboard/*" element={<Dashboard />}></Route>
       </Routes>
     </Router>
   );
