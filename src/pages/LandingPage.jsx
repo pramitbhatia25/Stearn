@@ -103,7 +103,6 @@ function LandingPage() {
                         {registerMessage}
 
                     </div>
-
                     <div className="light flex flex-col items-center justify-center w-full md:w-[35%] mx-auto min-h-[40vh]">
                         <Trade />
                     </div>
@@ -240,29 +239,29 @@ function LandingPage() {
                 </div>
 
                 <div className="light flex flex-col sm:flex-row gap-4 max-w-[500px]">
-                <Input
-                    type="email"
-                    placeholder="you@example.com"
-                    labelPlacement="outside"
-                    value={value}
-                    onChange={(e) => setValue(e.target.value)}
-                    startContent={<MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />}
-                />
-                {registerLoading ? <>
-                    <div className="flex gap-4 m-auto">
-                        <Button color="secondary" auto className="mb-5 py-3 px-8" >
-                            Loading...
-                        </Button>
-                    </div>
-                </> : <>
-                    <div className="flex gap-4 m-auto">
-                        <Button color="secondary" auto className="mb-5 py-3 px-8" onClick={registerUser}>
-                            Join Waitlist
-                        </Button>
-                    </div>
-                </>}
-            </div>
-            {registerMessage}
+                    <Input
+                        type="email"
+                        placeholder="you@example.com"
+                        labelPlacement="outside"
+                        value={value}
+                        onChange={(e) => setValue(e.target.value)}
+                        startContent={<MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />}
+                    />
+                    {registerLoading ? <>
+                        <div className="flex gap-4 m-auto">
+                            <Button color="secondary" auto className="mb-5 py-3 px-8" >
+                                Loading...
+                            </Button>
+                        </div>
+                    </> : <>
+                        <div className="flex gap-4 m-auto">
+                            <Button color="secondary" auto className="mb-5 py-3 px-8" onClick={registerUser}>
+                                Join Waitlist
+                            </Button>
+                        </div>
+                    </>}
+                </div>
+                {registerMessage}
 
 
                 <Spacer y={5} />
