@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-import LandingPage from "./LandingPage";
 import Sidebar from "../components/Sidebar";
 import Home from "./DashboardPages/Home";
 import LayoutNavbar from "../components/LayoutNavbar";
