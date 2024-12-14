@@ -40,7 +40,7 @@ export default function CustomNavbar() {
   };
 
   return (
-    <Navbar isBordered height="10dvh" maxWidth="xl">
+    <Navbar isBordered height="10dvh" className="max-h-[70px]" maxWidth="xl">
 
         <NavbarContent justify="start">
           <Layers color="white" />
@@ -65,10 +65,10 @@ export default function CustomNavbar() {
           </NavbarItem>
         </NavbarContent>
 
-        <NavbarContent justify="end">
+        <NavbarContent className="light" justify="end">
         <NavbarItem>
-          <Button as={Link} color="secondary" href="dashboard" variant="flat">
-            Login
+          <Button as={Link} color="secondary" href="dashboard" variant="solid">
+            Get Started
           </Button>
         </NavbarItem>
       </NavbarContent>

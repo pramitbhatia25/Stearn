@@ -8,6 +8,7 @@ import register from "../components/register";
 import { SquareArrowOutUpRight, CircleChevronDown } from "lucide-react"
 import Trade from "./Trade";
 
+
 function LandingPage() {
 
     const [isLoaded, setIsLoaded] = useState(false);
@@ -57,7 +58,6 @@ function LandingPage() {
         <div className="landingpage">
 
             <CustomNavbar />
-
             <div className="h-auto bg-image-landing">
                 <div className="flex flex-col md:flex-row max-w-[1800px] mx-auto">
                     <div className="flex flex-col items-center md:items-start justify-center w-full md:w-[65%] mx-auto md:pl-10 min-h-[90vh] md:min-h-[100vh]">

@@ -1,55 +1,89 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight, Home, ArrowLeftRight, DollarSign, UsersRound, Replace, ChartArea, Wallet, CircleUserRound, MessageCircleQuestion } from "lucide-react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@nextui-org/button';
+import { useLocation } from 'react-router-dom';
 
-const SidebarItem = ({ icon: Icon, label, to, collapsed }) => (
-  <Link to={to}>
-    <Button
-      variant="light"
-      size="sm"
-      color='secondary'
-      className={`w-[90%] justify-start text-gray-300 hover:text-white hover:bg-gray-800 my-1 ${
-        collapsed ? 'px-0 justify-center mx-auto' : 'px-2'
-      }`}
+const Sidebar = ({collapsed, setIsSidebarCollapsed, onToggleCollapse}) => {
+  const [activeRoute, setActiveRoute] = useState('');
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const SidebarItem = ({ icon: Icon, label, to, collapsed }) => (
+    <div
     >
-      <Icon className={`h-5 w-5 ${collapsed ? '' : 'mr-3'}`} />
-      {!collapsed && <span>{label}</span>}
-    </Button>
-  </Link>
-);
+      <Button
+      onClick={() => navigate(to)}
+        variant={activeRoute === to ? "solid" : "light"}
+        size="sm"
+        color="secondary"
+        className={`w-[90%] justify-start text-gray-300 hover:text-white my-1 ${collapsed ? "px-0 py-1 justify-center flex-col h-fit" : "px-2"
+          }`}
+      >
+        <Icon className={`${collapsed ? "h-4 w-4" : "mr-3 h-5 w-5 "} ${activeRoute === to ? "text-purple" : "text-white"}`} />
+          {!collapsed && <span>{label}</span>}
+          {collapsed && <div className="text-xs">{label}</div>}
+        </Button>
+    </div>
+  );
 
-const styles = {
-    navbarBrand: {
-      padding: '0 0.5rem',
-      fontWeight: 'bold',
-      color: 'white',
-      fontSize: '1.5rem',
-    }
-}
 
-const Sidebar = () => {
-  const [collapsed, setCollapsed] = useState(false);
-
+  useEffect(() => {
+    const handleResizeAndRoute = () => {
+      setIsSidebarCollapsed(window.innerWidth < 768);
+  
+      const currentPath = location.pathname;
+      console.log(location)
+      const routes = [
+        "/dashboard",
+        "/dashboard/",
+        "/dashboard/transactions",
+        "/dashboard/fees",
+        "/dashboard/affiliate",
+        "/dashboard/swap",
+        "/dashboard/stake",
+        "/dashboard/widthdraw",
+        "/account",
+        "/support",
+      ];
+  
+      const matchedRoute = routes.find((route) =>
+        currentPath === route
+      );
+  
+      setActiveRoute(matchedRoute || "");
+    };
+  
+    handleResizeAndRoute();
+    window.addEventListener("resize", handleResizeAndRoute);
+  
+    return () => {
+      window.removeEventListener("resize", handleResizeAndRoute);
+    };
+  }, [location]);
+  
   return (
     <div
-    className={`flex flex-col h-screen transition-all duration-300 border-r border-gray-800 flex-shrink-0 ${
-      collapsed ? 'w-[6dvw] min-w-[22px]' : 'w-[15dvw]'
-    }`}
-  >
-        <div className={`h-[10dvh] max-h-[70px] flex items-center ${collapsed ? 'justify-center' : 'justify-between'} border-b border-gray-800`}>
-        {!collapsed && <div className="cursor-pointer m-0 p-0 hover:scale-[1.05] transition-transform duration-200 ease-in-out" style={styles.navbarBrand}>Stearn</div>}
-        <Button
-        variant="light"
-        color="secondary"
-        size="sm"
-        onClick={() => setCollapsed(!collapsed)}
-        className="m-2 p-0 text-gray-300 hover:text-white"
-      >
-        {collapsed ? <ChevronRight className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}
-      </Button>
-
-    </div>
+    >
+      <div className={`h-[10dvh] max-h-[70px] flex items-center ${collapsed ? 'justify-center' : 'justify-between'} border-b border-gray-800`}>
+      {!collapsed && (
+        <div
+        onClick={() => {window.location = "http://localhost:5173/"}}
+          className="cursor-pointer m-0 px-4 font-bold text-white text-xl hover:scale-[1.05] transition-transform duration-200 ease-in-out"
+        >
+          Stearn
+        </div>
+      )}
+      {collapsed && (
+        <div
+        onClick={() => {window.location = "http://localhost:5173/"}}
+          className="cursor-pointer m-0 p-0 font-bold text-white text-sm hover:scale-[1.05] transition-transform duration-200 ease-in-out"
+        >
+          Stearn
+        </div>
+      )}
+      
+      </div>
       <nav className="flex-1 overflow-y-auto overflow-x-hidden">
         <div className="py-3 text-center">
           {!collapsed && (

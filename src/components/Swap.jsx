@@ -1,9 +1,8 @@
 function SwapComponent() {
-  return <div className='w-[84.5dvw] h-[90dvh] flex justify-center items-center'>
+  return <div className='flex justify-center items-center'>
     <div className='h-fit w-fit'>
-      Under Development
+      Developing
     </div>
   </div>
 }
-
 export default SwapComponent;

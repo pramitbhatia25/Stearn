@@ -2,6 +2,9 @@ import { Navbar, NavbarContent, NavbarItem, Link, NavbarBrand, Button} from "@ne
 import { useNavigate } from "react-router-dom";
 import "./index.css";
 import { Layers } from "lucide-react";
+import {
+  DynamicWidget,
+} from "@dynamic-labs/sdk-react-core";
 
 export default function LayoutNavbar() {
   const navigate = useNavigate();
@@ -40,8 +43,10 @@ export default function LayoutNavbar() {
   };
 
   return (
-    <div className="relative sticky top-0 z-10 h-[10dvh] max-h-[70px] w-full border-b border-gray-800 bg-black">
-        
+    <div className="relative sticky top-0 z-10 h-[10dvh] max-h-[70px] w-full border-b border-gray-800 bg-black flex justify-end items-center">
+      <div className="w-fit mr-5">
+        <DynamicWidget />      
+      </div>
     </div>
   );
 }
