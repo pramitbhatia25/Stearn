@@ -1,4 +1,4 @@
-import { Briefcase, Sliders, Activity, BellRing, BrainCog, CircleHelp } from "lucide-react";
+import { Briefcase, Activity, BrainCog} from "lucide-react";
 
 export const features = [
     {

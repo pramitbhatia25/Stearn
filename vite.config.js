@@ -4,14 +4,7 @@ import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 
 export default defineConfig({
-  build: {
-    rollupOptions: {
-        plugins: [
-          nodePolyfills()
-        ]
-    }
-  },
-  plugins: [react()],
+  plugins: [nodePolyfills(), react()],
   resolve: {
     alias: {
       src: "/src",
