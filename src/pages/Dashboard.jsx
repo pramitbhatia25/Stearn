@@ -5,6 +5,8 @@ import SwapComponent from "../components/Swap";
 import { useState } from "react";
 import Transactions from "./DashboardPages/Transactions";
 import Dash from "./DashboardPages/Home";
+import Fees from "./DashboardPages/Fees";
+import Affiliate from "../components/Affiliates";
 
 function Dashboard() {
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
@@ -35,6 +37,8 @@ function Dashboard() {
                     <Route path="/" element={<Dash />} />
                     <Route path="/transactions" element={<Transactions />} />
                     <Route path="/swap" element={<SwapComponent />} />
+                    <Route path="/fees" element={<Fees />} />
+                    <Route path="/affiliate" element={<Affiliate />} />
                 </Routes>
             </main>
         </div>

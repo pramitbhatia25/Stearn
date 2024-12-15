@@ -7,6 +7,7 @@ import { MailIcon } from "../components/MailIcon";
 import register from "../components/register";
 import { SquareArrowOutUpRight, CircleChevronDown } from "lucide-react"
 import Trade from "./Trade";
+import { DynamicBridgeWidget } from "@dynamic-labs/sdk-react-core";
 
 
 function LandingPage() {
@@ -61,8 +62,7 @@ function LandingPage() {
             <div className="h-auto bg-image-landing">
                 <div className="flex flex-col md:flex-row max-w-[1800px] mx-auto">
                     <div className="flex flex-col items-center md:items-start justify-center w-full md:w-[65%] mx-auto md:pl-10 min-h-[90vh] md:min-h-[100vh]">
-
-
+        
                         <div className="text-4xl text-white md:text-5xl w-5/5 font-bold flex flex-wrap justify-center text-center md:justify-start md:text-left">
                             Swap and stake crypto on <span className="text-purple-400 mx-3">any</span> chain,
                             <span className="text-purple-400 mx-3">any</span> protocol,
