@@ -28,3 +28,8 @@
     background-repeat: no-repeat;  
     
 }
+
+.custom_btn {
+    background-color: #7828c9 !important;
+    color: white;
+}

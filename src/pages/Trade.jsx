@@ -1,5 +1,7 @@
 import { Avatar, Button, Card, Input, Popover, PopoverContent, PopoverTrigger, Select, SelectItem } from "@nextui-org/react";
 import { useEffect, useState } from "react";
+import { isAuthenticatedWithAWallet } from "@dynamic-labs/sdk-react-core";
+import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 
 const initialCryptoData = [
     {
@@ -47,6 +49,11 @@ const initialCryptoData = [
 ];
 
 const Trade = () => {
+    const { user } = useDynamicContext();
+    if(user) {
+        const authenticatedWithAWallet = isAuthenticatedWithAWallet(user)
+        console.log(authenticatedWithAWallet)    
+    }
 
     const [cryptoData, setCryptoData] = useState(initialCryptoData);
     const [loading, setLoading] = useState(true);
@@ -89,44 +96,13 @@ const Trade = () => {
     useEffect(() => {
         fetchCryptoPrices();
     }, []);
-
-    useEffect(() => {
-        const fromCrypto = cryptoData.find((crypto) => crypto.id === Array.from(fromValue)[0]);
-        const toCrypto = cryptoData.find((crypto) => crypto.id === Array.from(toValue)[0]);
-    
-        if (fromCrypto && toCrypto) {
-            if (fromAmount > 0) {
-                const calculatedToAmount = (fromAmount * fromCrypto.currentPrice) / toCrypto.currentPrice;
-                setToAmount(calculatedToAmount.toFixed(4));
-            } else if (toAmount > 0) {
-                const calculatedFromAmount = (toAmount * toCrypto.currentPrice) / fromCrypto.currentPrice;
-                setFromAmount(calculatedFromAmount.toFixed(4));
-            }
-        }
-    }, [fromValue, toValue, cryptoData]);
     
     const handleFromAmountChange = (value) => {
         setFromAmount(value);
-
-        const fromCrypto = cryptoData.find((crypto) => crypto.id === Array.from(fromValue)[0]);
-        const toCrypto = cryptoData.find((crypto) => crypto.id === Array.from(toValue)[0]);
-
-        if (fromCrypto && toCrypto && value) {
-            const calculatedToAmount = (value * fromCrypto.currentPrice) / toCrypto.currentPrice;
-            setToAmount(calculatedToAmount.toFixed(4));
-        }
     };
 
     const handleToAmountChange = (value) => {
         setToAmount(value);
-
-        const fromCrypto = cryptoData.find((crypto) => crypto.id === Array.from(fromValue)[0]);
-        const toCrypto = cryptoData.find((crypto) => crypto.id === Array.from(toValue)[0]);
-
-        if (fromCrypto && toCrypto && value) {
-            const calculatedFromAmount = (value * toCrypto.currentPrice) / fromCrypto.currentPrice;
-            setFromAmount(calculatedFromAmount.toFixed(4));
-        }
     };
 
 
@@ -287,15 +263,14 @@ const Trade = () => {
                     </div>
                 </div>
                 <div className="flex gap-4 m-auto w-[300px]">
-                <Popover key={"secondary"} placement="top" color={"secondary"}>
-                <PopoverTrigger>
-                    <Button color="secondary" auto className="mb-5 py-3 px-8 w-full">
-                        Execute Trade
-                    </Button>
-                </PopoverTrigger>
-                {content}
-          </Popover>
-
+                    <Popover key={"secondary"} placement="top" color={"secondary"}>
+                        <PopoverTrigger>
+                            <Button color="secondary" variant="ghost" auto className="mb-5 py-3 px-8 w-full">
+                                Execute Trade
+                            </Button>
+                        </PopoverTrigger>
+                        {content}
+                    </Popover>
                 </div>      
                 
             </>}

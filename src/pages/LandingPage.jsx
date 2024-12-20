@@ -58,7 +58,10 @@ function LandingPage() {
 
         <div className="landingpage">
 
-            <CustomNavbar />
+            <div className="fixed w-full top-0 z-[50]">
+                <CustomNavbar />    
+            </div>
+
             <div className="h-auto bg-image-landing">
                 <div className="flex flex-col md:flex-row max-w-[1800px] mx-auto">
                     <div className="flex flex-col items-center md:items-start justify-center w-full md:w-[65%] mx-auto md:pl-10 min-h-[90vh] md:min-h-[100vh]">
@@ -94,7 +97,7 @@ function LandingPage() {
                                 </div>
                             </> : <>
                                 <div className="flex gap-4 m-auto">
-                                    <Button color="secondary" auto className="mb-5 py-3 px-8" onClick={registerUser}>
+                                    <Button auto className="mb-5 py-3 px-8 custom_btn" onClick={registerUser}>
                                         Join Waitlist
                                     </Button>
                                 </div>
@@ -254,8 +257,8 @@ function LandingPage() {
                             </Button>
                         </div>
                     </> : <>
-                        <div className="flex gap-4 m-auto">
-                            <Button color="secondary" auto className="mb-5 py-3 px-8" onClick={registerUser}>
+                        <div className="flex gap-4 m-auto dark">
+                            <Button color="secondary" variant="ghost" auto className="mb-5 py-3 px-8" onClick={registerUser}>
                                 Join Waitlist
                             </Button>
                         </div>

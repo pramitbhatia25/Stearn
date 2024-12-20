@@ -1,12 +1,14 @@
 import { Route, Routes } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import LayoutNavbar from "../components/LayoutNavbar";
-import SwapComponent from "../components/Swap";
 import { useState } from "react";
 import Transactions from "./DashboardPages/Transactions";
 import Dash from "./DashboardPages/Home";
 import Fees from "./DashboardPages/Fees";
 import Affiliate from "../components/Affiliates";
+import SwapComponent from "./DashboardPages/Swap";
+import StakeComponent from "./DashboardPages/Stake";
+import WithdrawComponent from "./DashboardPages/Withdraw";
 
 function Dashboard() {
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
@@ -37,6 +39,8 @@ function Dashboard() {
                     <Route path="/" element={<Dash />} />
                     <Route path="/transactions" element={<Transactions />} />
                     <Route path="/swap" element={<SwapComponent />} />
+                    <Route path="/stake" element={<StakeComponent />} />
+                    <Route path="/withdraw" element={<WithdrawComponent />} />                    
                     <Route path="/fees" element={<Fees />} />
                     <Route path="/affiliate" element={<Affiliate />} />
                 </Routes>

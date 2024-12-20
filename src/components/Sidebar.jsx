@@ -17,7 +17,7 @@ const Sidebar = ({collapsed, setIsSidebarCollapsed, onToggleCollapse}) => {
         variant={activeRoute === to ? "solid" : "light"}
         size="sm"
         color="secondary"
-        className={`w-[90%] justify-start text-gray-300 hover:text-white my-1 ${collapsed ? "px-0 py-1 justify-center flex-col h-fit" : "px-2"
+        className={`w-[90%] justify-start text-gray-300 hover:text-white my-1 ${activeRoute === to ? "custom_btn": ""} ${collapsed ? "px-0 py-1 justify-center flex-col h-fit" : "px-2"
           }`}
       >
         <Icon className={`${collapsed ? "h-4 w-4" : "mr-3 h-5 w-5 "} ${activeRoute === to ? "text-purple" : "text-white"}`} />
@@ -42,7 +42,7 @@ const Sidebar = ({collapsed, setIsSidebarCollapsed, onToggleCollapse}) => {
         "/dashboard/affiliate",
         "/dashboard/swap",
         "/dashboard/stake",
-        "/dashboard/widthdraw",
+        "/dashboard/withdraw",
         "/account",
         "/support",
       ];
@@ -104,7 +104,7 @@ const Sidebar = ({collapsed, setIsSidebarCollapsed, onToggleCollapse}) => {
           )}
           <SidebarItem icon={Replace} label="Swap" to="/dashboard/swap" collapsed={collapsed} />
           <SidebarItem icon={ChartArea} label="Stake" to="/dashboard/stake" collapsed={collapsed} />
-          <SidebarItem icon={Wallet} label="Widthdraw" to="/dashboard/widthdraw" collapsed={collapsed} />
+          <SidebarItem icon={Wallet} label="Withdraw" to="/dashboard/withdraw" collapsed={collapsed} />
         </div>
         <div className="py-3 text-center">
           {!collapsed && (
