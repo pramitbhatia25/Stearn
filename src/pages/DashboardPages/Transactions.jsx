@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Chip, Tooltip, User, Pagination } from "@nextui-org/react";
+import React, { useEffect, useState } from "react";
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Chip, User, Pagination } from "@nextui-org/react";
+import SwingSDK from '@swing.xyz/sdk';
 
 const statusColorMap = {
   Completed: "success",
@@ -316,6 +317,26 @@ export default function Transactions() {
     }),
     [],
   );
+
+  async function getTransactions() {
+    const swingSDK = new SwingSDK({
+      environment: 'testnet',
+      projectId: 'testing-pramit',     
+    });
+
+    await swingSDK.init();
+
+    const transactions = await swingSDK.wallet.getTransactions();
+    await swingSDK.wallet.connect(window.CoinbaseWalletProvider, 'ethereum');
+
+
+    console.log("HELL YEAH")
+    console.log(transactions)
+  }
+
+  useEffect(() => {
+    getTransactions()
+  }, [])
 
   return (
     <div className="m-5">
