@@ -39,3 +39,7 @@
       background-position: 100%;
     }
   }
+  .custom_btn {
+    background-color: #7828c9 !important;
+    color: white;
+}

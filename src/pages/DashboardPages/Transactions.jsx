@@ -1,387 +1,201 @@
 import React, { useEffect, useState } from "react";
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Chip, User, Pagination } from "@nextui-org/react";
 import SwingSDK from '@swing.xyz/sdk';
+import { Button, Card, CardBody, CardFooter, CardHeader, Chip, Divider, Image, Link, Textarea } from "@nextui-org/react";
+import "./index.css"
 
-const statusColorMap = {
-  Completed: "success",
-  Pending: "warning",
-  Failed: "danger",
-};
-
-const columns = [
-  { name: "STATUS", uid: "status" },
-  { name: "SEND", uid: "send" },
-  { name: "RECEIVE", uid: "receive" },
-  { name: "AMOUNT", uid: "amount" },
-  { name: "BRIDGE", uid: "bridge" },
-];
-
-const transactions = [
-    {
-      id: 1,
-      status: "Completed",
-      send: {
-        avatar: "https://i.pravatar.cc/150?img=3", // Updated avatar
-        name: "Ethereum",
-        subtext: "ETH Network"
-      },
-      receive: {
-        avatar: "https://i.pravatar.cc/150?img=5", // Updated avatar
-        name: "Binance Smart Chain",
-        subtext: "BSC Network"
-      },
-      amount: {
-        value: "1.5",
-        dollarValue: "$2,100"
-      },
-      bridge: {
-        avatar: "https://i.pravatar.cc/150?img=7", // Updated avatar
-        text: "AnySwap"
-      }
-    },
-    {
-      id: 2,
-      status: "Pending",
-      send: {
-        avatar: "https://i.pravatar.cc/150?img=9", // Updated avatar
-        name: "Solana",
-        subtext: "SOL Network"
-      },
-      receive: {
-        avatar: "https://i.pravatar.cc/150?img=12", // Updated avatar
-        name: "Avalanche",
-        subtext: "AVAX Network"
-      },
-      amount: {
-        value: "2.0",
-        dollarValue: "$2,800"
-      },
-      bridge: {
-        avatar: "https://i.pravatar.cc/150?img=15", // Updated avatar
-        text: "Wormhole"
-      }
-    },
-    {
-      id: 3,
-      status: "Failed",
-      send: {
-        avatar: "https://i.pravatar.cc/150?img=18", // Updated avatar
-        name: "Polygon",
-        subtext: "MATIC Network"
-      },
-      receive: {
-        avatar: "https://i.pravatar.cc/150?img=21", // Updated avatar
-        name: "Fantom",
-        subtext: "FTM Network"
-      },
-      amount: {
-        value: "0.8",
-        dollarValue: "$1,120"
-      },
-      bridge: {
-        avatar: "https://i.pravatar.cc/150?img=25", // Updated avatar
-        text: "Multichain"
-      }
-    },
-    {
-      id: 4,
-      status: "Completed",
-      send: {
-        avatar: "https://i.pravatar.cc/150?img=30", // Updated avatar
-        name: "Cardano",
-        subtext: "ADA Network"
-      },
-      receive: {
-        avatar: "https://i.pravatar.cc/150?img=33", // Updated avatar
-        name: "Tezos",
-        subtext: "XTZ Network"
-      },
-      amount: {
-        value: "5.0",
-        dollarValue: "$4,500"
-      },
-      bridge: {
-        avatar: "https://i.pravatar.cc/150?img=36", // Updated avatar
-        text: "xBridge"
-      }
-    },
-    {
-      id: 5,
-      status: "Pending",
-      send: {
-        avatar: "https://i.pravatar.cc/150?img=39", // Updated avatar
-        name: "Polkadot",
-        subtext: "DOT Network"
-      },
-      receive: {
-        avatar: "https://i.pravatar.cc/150?img=42", // Updated avatar
-        name: "Tron",
-        subtext: "TRX Network"
-      },
-      amount: {
-        value: "3.2",
-        dollarValue: "$3,040"
-      },
-      bridge: {
-        avatar: "https://i.pravatar.cc/150?img=45", // Updated avatar
-        text: "ChainLink"
-      }
-    },
-    {
-        id: 6,
-        status: "Pending",
-        send: {
-          avatar: "https://i.pravatar.cc/150?img=39", // Updated avatar
-          name: "Polkadot",
-          subtext: "DOT Network"
-        },
-        receive: {
-          avatar: "https://i.pravatar.cc/150?img=42", // Updated avatar
-          name: "Tron",
-          subtext: "TRX Network"
-        },
-        amount: {
-          value: "3.2",
-          dollarValue: "$3,040"
-        },
-        bridge: {
-          avatar: "https://i.pravatar.cc/150?img=45", // Updated avatar
-          text: "ChainLink"
-        }
-      },
-      {
-        id: 7,
-        status: "Pending",
-        send: {
-          avatar: "https://i.pravatar.cc/150?img=39", // Updated avatar
-          name: "Polkadot",
-          subtext: "DOT Network"
-        },
-        receive: {
-          avatar: "https://i.pravatar.cc/150?img=42", // Updated avatar
-          name: "Tron",
-          subtext: "TRX Network"
-        },
-        amount: {
-          value: "3.2",
-          dollarValue: "$3,040"
-        },
-        bridge: {
-          avatar: "https://i.pravatar.cc/150?img=45", // Updated avatar
-          text: "ChainLink"
-        }
-      },
-      {
-        id: 8,
-        status: "Pending",
-        send: {
-          avatar: "https://i.pravatar.cc/150?img=39", // Updated avatar
-          name: "Polkadot",
-          subtext: "DOT Network"
-        },
-        receive: {
-          avatar: "https://i.pravatar.cc/150?img=42", // Updated avatar
-          name: "Tron",
-          subtext: "TRX Network"
-        },
-        amount: {
-          value: "3.2",
-          dollarValue: "$3,040"
-        },
-        bridge: {
-          avatar: "https://i.pravatar.cc/150?img=45", // Updated avatar
-          text: "ChainLink"
-        }
-      },
-      {
-        id: 9,
-        status: "Pending",
-        send: {
-          avatar: "https://i.pravatar.cc/150?img=39", // Updated avatar
-          name: "Polkadot",
-          subtext: "DOT Network"
-        },
-        receive: {
-          avatar: "https://i.pravatar.cc/150?img=42", // Updated avatar
-          name: "Tron",
-          subtext: "TRX Network"
-        },
-        amount: {
-          value: "3.2",
-          dollarValue: "$3,040"
-        },
-        bridge: {
-          avatar: "https://i.pravatar.cc/150?img=45", // Updated avatar
-          text: "ChainLink"
-        }
-      },
-      {
-        id: 10,
-        status: "Pending",
-        send: {
-          avatar: "https://i.pravatar.cc/150?img=39", // Updated avatar
-          name: "Polkadot",
-          subtext: "DOT Network"
-        },
-        receive: {
-          avatar: "https://i.pravatar.cc/150?img=42", // Updated avatar
-          name: "Tron",
-          subtext: "TRX Network"
-        },
-        amount: {
-          value: "3.2",
-          dollarValue: "$3,040"
-        },
-        bridge: {
-          avatar: "https://i.pravatar.cc/150?img=45", // Updated avatar
-          text: "ChainLink"
-        }
-      },
-            ];
-  
 export default function Transactions() {
-  const renderCell = React.useCallback((transaction, columnKey) => {
-    const cellValue = transaction[columnKey];
+  const [value, setValue] = React.useState("");
+  const [transactions, setTransactions] = React.useState([]);
+  const [gptResponse, setGPTResponse] = React.useState("");
 
-    switch (columnKey) {
-      case "status":
-        return (
-          <Chip className="capitalize" color={statusColorMap[transaction.status]} size="sm" variant="flat">
-            {cellValue}
-          </Chip>
-        );
-      case "send":
-        return (
-            <User
-            avatarProps={{radius: "lg", src: transaction.send.avatar}}
-            description={transaction.send.subtext}
-            name={transaction.send.name}
-          >
-            {transaction.send.subtext}
-          </User>
-        );
-      case "receive":
-        return (
-            <User
-            avatarProps={{radius: "lg", src: transaction.receive.avatar}}
-            description={transaction.receive.subtext}
-            name={transaction.receive.name}
-          >
-            {transaction.receive.subtext}
-          </User>
-        );
-      case "amount":
-        return (
-          <div>
-            <p>{cellValue.value} BTC</p>
-            <p className="text-sm text-default-400">{cellValue.dollarValue}</p>
-          </div>
-        );
-      case "bridge":
-        return (
-            <User
-            avatarProps={{radius: "lg", src: transaction.bridge.avatar}}
-            name={transaction.bridge.text}
-          >
-            {transaction.bridge.text}
-          </User>
-        );
-      default:
-        return cellValue;
-    }
-  }, []);
+  async function processRawString(rawString) {
 
-
-  const [page, setPage] = useState(1);
-  const rowsPerPage = (window.innerWidth < 640) ? 6 : 12;
-
-  const pages = Math.ceil(transactions.length / rowsPerPage);
-
-  const items = React.useMemo(() => {
-    const start = (page - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-
-    return transactions.slice(start, end);
-  }, [page, transactions]);
-
-  const classNames = React.useMemo(
-    () => ({
-      th: ["bg-transparent", "text-default-500", "border-b", "border-divider"],
-      td: [
-        "group-data-[first=true]/tr:first:before:rounded-none",
-        "group-data-[first=true]/tr:last:before:rounded-none",
-        "group-data-[middle=true]/tr:before:rounded-none",
-        "group-data-[last=true]/tr:first:before:rounded-none",
-        "group-data-[last=true]/tr:last:before:rounded-none",
-      ],
-    }),
-    [],
-  );
-
-  async function getTransactions() {
-    const swingSDK = new SwingSDK({
-      environment: 'testnet',
-      projectId: 'testing-pramit',     
-    });
-
-    await swingSDK.init();
-
-    const transactions = await swingSDK.wallet.getTransactions();
-    await swingSDK.wallet.connect(window.CoinbaseWalletProvider, 'ethereum');
-
-
-    console.log("HELL YEAH")
-    console.log(transactions)
+    const swapQuery = {
+      fromChain: "arbitrum",
+      tokenSymbol: "ETH",
+      fromTokenAddress: "0x0000000000000000000000000000000000000000",
+      fromUserAddress: "0x0f86DB4C951b009281011d502aad33677948DA41",
+      toChain: "arbitrum",
+      toTokenSymbol: "USDC",
+      toTokenAddress: "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      toUserAddress: "0x0f86DB4C951b009281011d502aad33677948DA41",
+      tokenAmount: "5000000000000000000", // 1 ETH
+    };
+    console.log("LLM processed query:", swapQuery);
+    return swapQuery;
   }
 
-  useEffect(() => {
-    getTransactions()
-  }, [])
+  async function createScheduledTransaction() {
+
+    setGPTResponse("Loading...")
+
+    if (!value.trim()) {
+      setGPTResponse("Description cannot be empty")
+      return;
+    }
+
+    try {
+      const swapQuery = await processRawString(value);
+
+      const quote = await fetchQuote(swapQuery);
+
+      const newTransaction = {
+        id: Date.now(),
+        description: value,
+        query: swapQuery,
+        quote: quote,
+      };
+
+      setTransactions((prevTransactions) => [...prevTransactions, newTransaction]);
+      setGPTResponse("Created Transaction!")
+      setValue("");
+    } catch (error) {
+      setGPTResponse(`Failed to create scheduled transaction. Please try again.\n${error}`);
+    }
+  }
+
+  async function getTransactions2() {
+    const url1 = 'https://stoplight.io/mocks/swing/swing-platform-api/134372359/projects/testing/transactions';
+    const url = 'https://platform.swing.xyz/api/v1/projects/testing-pramit/transactions'
+    /*https://platform.swing.xyz/api/v1/projects/testing-pramit/quote?fromChain=arbitrum&tokenSymbol=ETH&fromTokenAddress=0x0000000000000000000000000000000000000000&fromUserAddress=0x0f86DB4C951b009281011d502aad33677948DA41&toChain=arbitrum&toTokenSymbol=USDC&toTokenAddress=0xaf88d065e77c8cc2239327c5edb3a432268e5831&toUserAddress=0x0f86DB4C951b009281011d502aad33677948DA41&tokenAmount=1000000000000000000*/
+
+    const options = {
+      method: 'GET',
+      headers: { 'x-swing-environment': 'production', Accept: 'application/json', "authorization": 'swing-5807a47a-bcb4-45a5-8aea-5a69560c9e8a' }
+    };
+
+    try {
+      console.log("HELL YEAH")
+      const response = await fetch(url, options);
+      const data = await response.json();
+      console.log("HELL YEAH")
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  function removeTransaction(id) {
+    setTransactions((prevTransactions) =>
+      prevTransactions.filter((transaction) => transaction.id !== id)
+    );
+  }
+
+
+  async function fetchQuote(query) {
+    const baseURL = "https://platform.swing.xyz/api/v1/projects/testing-pramit/quote";
+    const urlParams = new URLSearchParams(query).toString();
+    const url = `${baseURL}?${urlParams}`;
+
+    const options = {
+      method: "GET",
+      headers: {
+        "x-swing-environment": "production",
+        Accept: "application/json",
+      },
+    };
+
+    try {
+      const response = await fetch(url, options);
+      const data = await response.json();
+      console.log("Fetched quote data:", data);
+      return data;
+    } catch (error) {
+      console.error("Error fetching quote:", error);
+      throw new Error("Failed to fetch quote.");
+    }
+  }
+
+
+  // useEffect(() => {
+  //   getTransactions2("bc1qjmkshgkfjetrqjt3z88mha2aws5jjd4cp4shek")
+  // }, [])
 
   return (
     <div className="m-5">
-    <div className="text-[15px] md:text-[25px] mb-5">Transactions</div>
-    <Table 
-        isStriped
-        aria-label="Transaction Table"
-        checkboxesProps={{
-            classNames: {
-              wrapper: "after:bg-foreground after:text-background text-background",
-            },
-          }}
-        classNames={classNames}
-        bottomContent={
-            <div className="flex w-full justify-center">
-            <Pagination
-                isCompact
-                showControls
-                showShadow
-                color="secondary"
-                page={page}
-                total={pages}
-                onChange={(page) => setPage(page)}
-            />
+      <div className="text-[15px] md:text-[25px] mb-5">Transactions</div>
+
+      <div className="w-full">
+        <Textarea
+          isClearable
+          className=" h-fit"
+          label="Description"
+          placeholder="Description"
+          variant="bordered"
+          value={value}
+          onValueChange={setValue}
+          onClear={() => console.log("textarea cleared")}
+        />
+
+        <Button
+          className="my-5 block"
+          color="secondary"
+          onClick={createScheduledTransaction}
+        >
+          Create Scheduled Transaction
+        </Button>
+
+        {gptResponse}
+      </div>
+
+      {transactions.map((transaction) => (
+        <Card className="my-5 p-5 w-full"
+          key={transaction.id}
+        >
+          <CardHeader className="flex gap-3">
+            <div className="flex flex-col">
+              <p className="text-md">{transaction.description}</p>
+              <p className="text-small text-default-500">{new Date(transaction.id).toLocaleString()}</p>
             </div>
-        }
-      >
-        <TableHeader columns={columns}>
-          {(column) => (
-            <TableColumn key={column.uid}
-            allowsSorting={column.sortable}
-            
-            align={column.uid === "bridge" ? "center" : "start"}>
-              {column.name}
-            </TableColumn>
-          )}
-        </TableHeader>
-        <TableBody items={items} >
-          {(item) => (
-            <TableRow key={item.id} >
-              {(columnKey) => <TableCell className="">{renderCell(item, columnKey)}</TableCell>}
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+          </CardHeader>
+          <Divider />
+          <CardBody>
+
+            <div className="flex flex-row justify-between items-start">
+
+              <div>
+                <h3>Transaction Quote</h3>
+                <br />
+                <div>
+                  <p><strong>Integration:</strong> {JSON.stringify(transaction.quote.routes[0].quote.integration)}</p>
+                  <p><strong>Swap Type:</strong> {JSON.stringify(transaction.quote.routes[0].quote.type)}</p>
+                  <p><strong>Bridge Fee:</strong> {JSON.stringify(transaction.quote.routes[0].quote.bridgeFee)}</p>
+                  <p><strong>Amount:</strong> {JSON.stringify(transaction.quote.routes[0].quote.amount)}</p>
+                  <p><strong>Amount (USD):</strong> {JSON.stringify(transaction.quote.routes[0].quote.amountUSD)}</p>
+                  <p><strong>Bridge Fee USD:</strong> {JSON.stringify(transaction.quote.routes[0].quote.bridgeFeeUSD)}</p>
+                  <p><strong>Price Impact:</strong> {JSON.stringify(transaction.quote.routes[0].quote.priceImpact)}</p>
+                </div>
+              </div>
+
+              <div>
+                <h3>Fees:</h3>
+                <br />
+                <ul>
+                  {transaction.quote.routes[0].quote.fees.map((fee, index) => (
+                    <li key={index}>
+                      <p><strong>Type:</strong> {JSON.stringify(fee.type)}</p>
+                      <p><strong>Amount:</strong> {JSON.stringify(fee.amount)}</p>
+                      <p><strong>Amount (USD):</strong> {JSON.stringify(fee.amountUSD)}</p>
+                      <p><strong>Chain:</strong> {JSON.stringify(fee.chainSlug)}</p>
+                      <p><strong>Token Symbol:</strong> {JSON.stringify(fee.tokenSymbol)}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <Chip
+                onClose={() => removeTransaction(transaction.id)}
+                className="text-white"
+              >
+                Remove Transaction
+              </Chip>
+            </div>
+
+          </CardBody>
+
+        </Card>
+
+      ))}
     </div>
   );
 }
