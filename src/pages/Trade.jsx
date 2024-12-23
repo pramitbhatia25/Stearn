@@ -1,6 +1,6 @@
 import { Accordion, AccordionItem, Avatar, AvatarGroup, Button, ButtonGroup, Card, CardHeader, Divider, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, Select, SelectItem } from "@nextui-org/react";
 import { useEffect, useState } from "react";
-import { isAuthenticatedWithAWallet } from "@dynamic-labs/sdk-react-core";
+import { DynamicWidget, isAuthenticatedWithAWallet } from "@dynamic-labs/sdk-react-core";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { useUserWallets } from '@dynamic-labs/sdk-react-core'
 import SwingSDK from '@swing.xyz/sdk';
@@ -59,8 +59,8 @@ const initialCryptoData = [
         name: 'BTC',
         chain: "merlin",
         protocol: "EVM",
-        tokenSymbol: "SolvBTC",
-        tokenAddress: "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
+        tokenSymbol: "BTC",
+        tokenAddress: "0x0000000000000000000000000000000000000000",
         id: '5',
         tokenImage: 'https://s3.ap-northeast-1.amazonaws.com/platform.swing.xyz/assets/btc/19952c464ee97fc44c68e6d1d175772edef9df88676d1534a24e6c603fee6a58.png',
         chainImage: "https://s3.ap-northeast-1.amazonaws.com/platform.swing.xyz/chains/merlin/9f271e2535ce3e037adb16dec98470631e4c4842c550cb6ea8c5b6d8fae6137f.png",
@@ -152,16 +152,23 @@ const Trade = () => {
             setSelectedFromOption(userWallets[0].id);
             setSelectedToOption(userWallets[0].id);
         }
+
     }, [userWallets, selectedFromOption, selectedToOption]);
+
+    useEffect(() => {
+        setReceivedQuote(null)
+    }, [fromValue, toValue])
 
     const handleFromWalletChange = (selection) => {
         const walletId = Array.isArray(selection) ? selection[0] : [...selection][0];
         setSelectedFromOption(walletId);
+        setReceivedQuote(null)
     };
 
     const handleToWalletChange = (selection) => {
         const walletId = Array.isArray(selection) ? selection[0] : [...selection][0];
         setSelectedToOption(walletId);
+        setReceivedQuote(null)
     };
 
     const selectedFromWalletAddress = userWallets.find((wallet) => wallet.id === selectedFromOption)?.address || "Select Wallet";
@@ -169,20 +176,19 @@ const Trade = () => {
 
     const handleFromAmountChange = (value) => {
         setFromAmount(value);
+        setReceivedQuote(null)
     };
 
     const handleToAmountChange = (value) => {
         setToAmount(value);
     };
 
-
-
     const QuoteCard = ({ quoteData }) => {
 
         if (!quoteData || Object.keys(quoteData).length === 0) {
             return <div>
                 <div className="p-5">
-                    <Card className="mb-5">
+                    <Card className="">
                         <div className="p-5 flex flex-col gap-0.5">
                             No Routes Found
                         </div>
@@ -215,7 +221,7 @@ const Trade = () => {
             return (
                 <div>
                     <div className="p-5">
-                        <Card className="mb-5">
+                        <Card className="">
                             <div className="p-5 flex flex-col gap-0.5">
                                 <div className="font-bold flex flex-row gap-1 items-end">
                                     <div className="text-lg font-bold">{amountToReceiveParsed}</div>
@@ -508,8 +514,9 @@ const Trade = () => {
                         </div>
                     </div>
                 </div>
+
                 {loading && <>
-                    <Card className="m-5 p-5 h-[100px] flex items-center justify-center">
+                    <Card className="mt-5 mx-5 p-5 h-[100px] flex items-center justify-center">
                         Loading...
                     </Card>
                 </>}
@@ -518,7 +525,7 @@ const Trade = () => {
                 </>}
 
             </div>
-            <div className="flex gap-4 m-auto w-[300px]">
+            <div className="flex mt-5 gap-4 m-auto w-[300px]">
                 {(selectedFromWalletAddress != "Select Wallet" && selectedToWalletAddress != "Select Wallet") &&
                     <Button color="secondary" variant="ghost" auto className="mb-5 py-3 px-8 w-full" onClick={() => { getQuote() }}>
                         Get Quote
@@ -526,9 +533,9 @@ const Trade = () => {
                 }
 
                 {(selectedFromWalletAddress == "Select Wallet" || selectedToWalletAddress == "Select Wallet") &&
-                    <Button disabled color="secondary" variant="flat" auto className="mb-5 py-3 px-8 w-full">
-                        Connect Wallet
-                    </Button>
+                    <div className="mb-5 flex justify-center w-full" >                
+                        <DynamicWidget innerButtonComponent={<div >Connect Wallet</div>} />
+                    </div>
                 }
             </div>
 
