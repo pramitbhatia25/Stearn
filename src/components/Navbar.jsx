@@ -40,38 +40,12 @@ export default function CustomNavbar() {
   };
 
   return (
-    <Navbar isBordered height="10dvh" className="max-h-[70px]" maxWidth="xl">
-
+    <Navbar className="h-[10dvh] w-[96dvw] max-h-[70px] my-[2dvh] mx-[2dvw] bg-white/10 backdrop-blur-md shadow-lg rounded-lg border border-white/20" maxWidth="xl">
+  
         <NavbarContent justify="start">
           <Layers color="white" />
           <div className="cursor-pointer m-0 p-0 hover:scale-[1.05] transition-transform duration-200 ease-in-out" onClick={() => { navigate("/") }} style={styles.navbarBrand}>Stearn</div>
         </NavbarContent>
-
-        <NavbarContent className="hidden sm:flex gap-4" justify="center">
-          <NavbarItem>
-            <Link color="foreground" href="#products">
-              Product Suite
-            </Link>
-          </NavbarItem>
-          <NavbarItem>
-            <Link color="foreground" href="#features">
-              Features
-            </Link>
-          </NavbarItem>
-          <NavbarItem>
-            <Link color="foreground" href="#faq">
-              FAQ
-            </Link>
-          </NavbarItem>
-        </NavbarContent>
-
-        <NavbarContent className="light" justify="end">
-        <NavbarItem>
-          <Button as={Link} color="secondary" href="dashboard" variant="solid">
-            Get Started
-          </Button>
-        </NavbarItem>
-      </NavbarContent>
 
     </Navbar>
   );

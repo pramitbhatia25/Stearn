@@ -35,6 +35,8 @@
     "@nextui-org/react": "^2.4.8",
     "@nextui-org/system": "^2.2.6",
     "@nextui-org/theme": "^2.2.11",
+    "@splinetool/react-spline": "^4.0.0",
+    "@splinetool/runtime": "^1.9.54",
     "@supabase/supabase-js": "^2.46.1",
     "@swing.xyz/sdk": "^0.29.3",
     "@swing.xyz/ui": "^0.63.0",
