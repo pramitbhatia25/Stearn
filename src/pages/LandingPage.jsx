@@ -68,7 +68,7 @@ function LandingPage() {
 
 
             <div className="h-auto bg-image-landing">
-                <div className="pt-[15dvh] pb-[5dvh] flex flex-col md:flex-row items-start max-w-[1800px] mx-auto">
+                <div className="pt-[10dvh] md:pt-[15dvh] pb-[5dvh] flex flex-col md:flex-row items-start max-w-[1800px] mx-auto">
                     <div className="flex flex-col items-center md:items-start justify-center w-full md:w-[65%] mx-auto md:pl-10 min-h-[90vh] md:min-h-[80vh]">
         
                         <div className="z-[3] text-4xl text-white md:text-5xl w-5/5 font-bold flex flex-wrap justify-center text-center md:justify-start md:text-left">
@@ -107,7 +107,9 @@ function LandingPage() {
                                 </div>
                             </>}
                         </div>
-                        {registerMessage}
+                        <div className="z-[3]">                    
+                            {registerMessage}
+                        </div>
 
                     </div>
                     <div className="z-[3] light flex flex-col items-center justify-center w-full md:w-[35%] mx-auto min-h-[90vh] md:min-h-[80vh]">

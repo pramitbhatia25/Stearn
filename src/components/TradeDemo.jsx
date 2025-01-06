@@ -138,12 +138,34 @@ const TradeDemo = () => {
     const [fromValue, setFromValue] = useState(new Set(["8"]));
     const [toValue, setToValue] = useState(new Set(["9"]));
     const [fromAmount, setFromAmount] = useState();
-    const [loading, setLoading] = useState(false)
-    const [receivedQuote, setReceivedQuote] = useState(null)
+    const [loading, setLoading] = useState(false);
+    const [receivedQuote, setReceivedQuote] = useState(null);
+    const [resetText, setResetText] = useState("")
+    const [secondsRemaining, setSecondsRemaining] = useState(0);
 
     useEffect(() => {
         setReceivedQuote(null)
+        setResetText(null)
     }, [fromValue, toValue])
+
+    useEffect(() => {
+        if (resetText) {
+            setSecondsRemaining(10);
+            const interval = setInterval(() => {
+                setSecondsRemaining((prev) => {
+                    if (prev <= 1) {
+                        clearInterval(interval);
+                        setResetText("");
+                        setReceivedQuote(null)
+                        return 0;
+                    }
+                    return prev - 1;
+                });
+            }, 1000);
+
+            return () => clearInterval(interval);
+        }
+    }, [resetText, setResetText]);
 
     const selectedFromWalletAddress = "0x0000000000000000000000000000000000000000";
     const selectedToWalletAddress = "0x0000000000000000000000000000000000000000";
@@ -238,7 +260,7 @@ const TradeDemo = () => {
             );
         }
     };
-    
+
 
     async function getQuote() {
         setLoading(true)
@@ -290,6 +312,7 @@ const TradeDemo = () => {
                 console.log("No Routes Found!");
                 setLoading(false)
                 setReceivedQuote({})
+                setResetText(null)
             }
             else {
                 const transferRoute = quote.routes[0];
@@ -297,6 +320,7 @@ const TradeDemo = () => {
                 setLoading(false)
                 setReceivedQuote(transferRoute)
             }
+            setResetText("New quote in 10s")
         } catch (error) {
             console.error('Error getting quote:', error);
             setLoading(false)
@@ -305,7 +329,7 @@ const TradeDemo = () => {
 
     return (
         <Card className="light w-[350px] h-[fit] border border-gray-900">
-        <div className="absolute -inset-1 bg-gradient-to-r from-red-500 to-purple-500 rounded-lg blur opacity-30 transition duration-500 group-hover:opacity-100"></div>
+            <div className="absolute -inset-1 bg-gradient-to-r from-red-500 to-purple-500 rounded-lg blur opacity-30 transition duration-500 group-hover:opacity-100"></div>
 
             <div className="flex flex-col">
                 <div className="h-fit mx-5 py-5 border-b border-black/10">
@@ -437,6 +461,9 @@ const TradeDemo = () => {
                         </div>
                     </div>
                 </div>
+                <div className="flex mt-5 text-[red] gap-4 m-auto w-[300px] justify-center">
+                {resetText ? `Quote expires in ${secondsRemaining}s` : ""}
+            </div>
 
                 {loading && <>
                     <Card className="mt-5 mx-5 p-5 h-[100px] flex items-center justify-center">
@@ -449,16 +476,15 @@ const TradeDemo = () => {
 
             </div>
             <div className="flex mt-5 gap-4 m-auto w-[300px]">
-                {(selectedFromWalletAddress != "Select Wallet" && selectedToWalletAddress != "Select Wallet") &&
+                {!receivedQuote &&
                     <Button color="secondary" variant="solid" auto className="mb-5 py-3 px-8 w-full" onClick={() => { getQuote() }}>
                         Get Quote
                     </Button>
                 }
-
-                {(selectedFromWalletAddress == "Select Wallet" || selectedToWalletAddress == "Select Wallet") &&
-                    <div className="mb-5 flex justify-center w-full" >                
-                        <DynamicWidget innerButtonComponent={<div >Connect Wallet</div>} />
-                    </div>
+                {receivedQuote &&
+                    <Button color="secondary" variant="solid" auto className="mb-5 py-3 px-8 w-full">
+                        Swap Execution Coming Soon!
+                    </Button>
                 }
             </div>
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { ChevronLeft, ChevronRight, Home, ArrowLeftRight, DollarSign, UsersRound, Replace, ChartArea, Wallet, CircleUserRound, MessageCircleQuestion } from "lucide-react";
-import { Link, useNavigate } from 'react-router-dom';
+import { Home, ArrowLeftRight, DollarSign, UsersRound, Replace, ChartArea, Wallet, CircleUserRound, MessageCircleQuestion } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@nextui-org/button';
 import { useLocation } from 'react-router-dom';
 
