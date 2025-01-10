@@ -5,6 +5,7 @@ import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { useUserWallets } from '@dynamic-labs/sdk-react-core'
 import SwingSDK from '@swing.xyz/sdk';
 import { Clock, Dot } from 'lucide-react';
+import executeSwingTransaction from "../components/Transact";
 
 const initialCryptoData = [
     {
@@ -114,7 +115,20 @@ const initialCryptoData = [
         chainImage: "https://raw.githubusercontent.com/polkaswitch/assets/master/blockchains/arbitrum/info/logo.png",
         decimals: 9,
         currentPrice: 0.0
+    },
+    {
+        name: 'ETH',
+        chain: "ethereum",
+        protocol: "EVM",
+        tokenSymbol: "ETH",
+        tokenAddress: "0x0000000000000000000000000000000000000000",
+        id: '10',
+        tokenImage: 'https://raw.githubusercontent.com/polkaswitch/assets/master/blockchains/solana/assets/7vfCXTUXx5WJV5JADk17DUJ4ksgau7utNKj4b963voxs/eth.jpg',
+        chainImage: "https://raw.githubusercontent.com/polkaswitch/assets/master/blockchains/solana/assets/7vfCXTUXx5WJV5JADk17DUJ4ksgau7utNKj4b963voxs/eth.jpg",
+        decimals: 18,
+        currentPrice: 0.0
     }
+
 ];
 
 const Trade = () => {
@@ -137,15 +151,18 @@ const Trade = () => {
     };
 
     const [cryptoData, setCryptoData] = useState(initialCryptoData);
-    const [fromValue, setFromValue] = useState(new Set(["8"]));
-    const [toValue, setToValue] = useState(new Set(["9"]));
+    const [fromValue, setFromValue] = useState(new Set(["10"]));
+    const [toValue, setToValue] = useState(new Set(["8"]));
     const [fromAmount, setFromAmount] = useState();
     const [toAmount, setToAmount] = useState();
     const userWallets = useUserWallets()
     const [selectedFromOption, setSelectedFromOption] = useState("");
     const [selectedToOption, setSelectedToOption] = useState("");
     const [loading, setLoading] = useState(false)
+    const [allQuotes, setAllQuotes] = useState(null)
     const [receivedQuote, setReceivedQuote] = useState(null)
+    const [selectedQuoteOption, setSelectedQuoteOption] = useState(new Set(["0"]))
+    const [executionResult, setExecutionResult] = useState(false)
 
     useEffect(() => {
         if (userWallets.length > 0 && !selectedFromOption) {
@@ -157,18 +174,62 @@ const Trade = () => {
 
     useEffect(() => {
         setReceivedQuote(null)
+        setExecutionResult(null)
+        setAllQuotes(null)
     }, [fromValue, toValue])
 
+    useEffect(() => {
+        if (!receivedQuote || selectedQuoteOption.size === 0) {
+            return; // Do nothing if no quote is received or no option is selected.
+        }
+    
+        if (receivedQuote) {
+            console.log(allQuotes);
+            const selectedOption = Array.from(selectedQuoteOption)[0];
+            console.log(selectedOption);
+    
+            const calculateTotalFeeUSD = (quote) => {
+                return quote.quote.fees.reduce((sum, fee) => sum + parseFloat(fee.amountUSD), 0);
+            };
+    
+            if (selectedOption === "0") {
+                console.log("Calculating best price...");
+                const bestPriceQuote = allQuotes.reduce((prev, curr) => {
+                    const prevTotalFeeUSD = calculateTotalFeeUSD(prev);
+                    const currTotalFeeUSD = calculateTotalFeeUSD(curr);
+        
+                    return prevTotalFeeUSD < currTotalFeeUSD ? prev : curr;
+                });
+                console.log(bestPriceQuote);
+                setReceivedQuote(bestPriceQuote);
+            } else if (selectedOption === "1") {
+                console.log("Calculating fastest quote...");
+                const fastestQuote = allQuotes.reduce((prev, curr) => {
+                    const prevDuration = parseFloat(prev.duration);
+                    const currDuration = parseFloat(curr.duration);
+                    return prevDuration < currDuration ? prev : curr;
+                });
+                console.log(fastestQuote);
+                setReceivedQuote(fastestQuote);
+            }
+        }
+    }, [selectedQuoteOption]);
+
+    
     const handleFromWalletChange = (selection) => {
         const walletId = Array.isArray(selection) ? selection[0] : [...selection][0];
         setSelectedFromOption(walletId);
         setReceivedQuote(null)
+        setExecutionResult(null)
+        setAllQuotes(null)
     };
 
     const handleToWalletChange = (selection) => {
         const walletId = Array.isArray(selection) ? selection[0] : [...selection][0];
         setSelectedToOption(walletId);
         setReceivedQuote(null)
+        setExecutionResult(null)
+        setAllQuotes(null)
     };
 
     const selectedFromWalletAddress = userWallets.find((wallet) => wallet.id === selectedFromOption)?.address || "Select Wallet";
@@ -177,6 +238,8 @@ const Trade = () => {
     const handleFromAmountChange = (value) => {
         setFromAmount(value);
         setReceivedQuote(null)
+        setExecutionResult(null)
+        setAllQuotes(null)
     };
 
     const handleToAmountChange = (value) => {
@@ -287,6 +350,16 @@ const Trade = () => {
 
         const tokenAmount = (fromAmount * Math.pow(10, fromTokenDecimal)).toString();
 
+        console.log(tokenAmount)
+
+        if(isNaN(tokenAmount) || tokenAmount === "0") {
+            setLoading(false)
+            setReceivedQuote({})
+            setExecutionResult(null)
+            setAllQuotes({})
+            return
+        }
+
         const queryParams = new URLSearchParams({
             fromChain,
             tokenSymbol: fromTokenSymbol,
@@ -319,18 +392,46 @@ const Trade = () => {
                 console.log("No Routes Found!");
                 setLoading(false)
                 setReceivedQuote({})
+                setExecutionResult(null)
+                setAllQuotes({})
             }
             else {
                 const transferRoute = quote.routes[0];
                 console.log(transferRoute);
                 setLoading(false)
                 setReceivedQuote(transferRoute)
+                setAllQuotes(quote.routes)
             }
         } catch (error) {
             console.error('Error getting quote:', error);
             setLoading(false)
         }
     }
+
+
+    async function executeCustomTransaction() {
+        setExecutionResult("Loading")
+        const fromTokenData = initialCryptoData.find(item => item.id === [...fromValue][0]);
+        const toTokenData = initialCryptoData.find(item => item.id === [...toValue][0]);
+
+        const fromChain = fromTokenData.chain;
+        const fromTokenSymbol = fromTokenData.tokenSymbol;
+        const fromTokenAddress = fromTokenData.tokenAddress;
+        const fromUserAddress = selectedFromWalletAddress;
+        const fromTokenDecimal = fromTokenData.decimals;
+
+        const toChain = toTokenData.chain;
+        const toTokenSymbol = toTokenData.tokenSymbol;
+        const toTokenAddress = toTokenData.tokenAddress;
+        const toUserAddress = selectedToWalletAddress;
+
+        const tokenAmount = (fromAmount * Math.pow(10, fromTokenDecimal)).toString();
+
+        const transactionDeets = await executeSwingTransaction(fromChain, fromTokenSymbol, fromTokenAddress, fromUserAddress, fromTokenDecimal, toChain, toTokenSymbol, toTokenAddress, toUserAddress, tokenAmount, receivedQuote)
+        console.log(transactionDeets)
+        setExecutionResult(transactionDeets)
+    }
+
 
     return (
         <Card className="light w-[350px] h-[fit] border border-gray-900">
@@ -515,6 +616,35 @@ const Trade = () => {
                     </div>
                 </div>
 
+                {receivedQuote && <>
+
+                    <div className="mx-5 pt-5 flex flex-row justify-between items-center">
+                        <div className="text-sm">
+                            {allQuotes.length > 0 ? allQuotes.length : 0} routes found!
+                        </div>
+                    </div>
+
+                    <div className="mx-5 pt-5 flex flex-row justify-between items-center">
+                        <div className="text-xs">
+                            Sort By
+                        </div>
+
+                        <Select
+                            size="sm"
+                            aria-label="Select quote type"
+                            className="w-[50%] text-xs text-[gray]"
+                            placeholder="Select"
+                            selectedKeys={selectedQuoteOption}
+                            onSelectionChange={setSelectedQuoteOption}
+                        >
+                            <SelectItem className="text-[gray]" key={"0"}>Lowest Fees</SelectItem>
+                            <SelectItem className="text-[gray]" key={"1"}>Lowest Time</SelectItem>
+                        </Select>
+
+                    </div>
+
+                </>}
+
                 {loading && <>
                     <Card className="mt-5 mx-5 p-5 h-[100px] flex items-center justify-center">
                         Loading...
@@ -524,16 +654,29 @@ const Trade = () => {
                     <QuoteCard quoteData={receivedQuote} />
                 </>}
 
+                {executionResult && <>                
+                    <Card className="mt-5 mx-5 p-5 h-[100px] flex items-center justify-center">
+                        {typeof executionResult === "string" ? executionResult : "Awaiting User Approval"}
+                    </Card>
+                </>
+                }
+
             </div>
             <div className="flex mt-5 gap-4 m-auto w-[300px]">
-                {(selectedFromWalletAddress != "Select Wallet" && selectedToWalletAddress != "Select Wallet") &&
+                {(selectedFromWalletAddress != "Select Wallet" && selectedToWalletAddress != "Select Wallet") && !receivedQuote &&
                     <Button color="secondary" variant="ghost" auto className="mb-5 py-3 px-8 w-full" onClick={() => { getQuote() }}>
                         Get Quote
                     </Button>
                 }
 
+                {(selectedFromWalletAddress != "Select Wallet" && selectedToWalletAddress != "Select Wallet") && receivedQuote &&
+                    <Button color="secondary" variant="ghost" auto className="mb-5 py-3 px-8 w-full" onClick={() => { executeCustomTransaction() }}>
+                        Execute Transaction
+                    </Button>
+                }
+
                 {(selectedFromWalletAddress == "Select Wallet" || selectedToWalletAddress == "Select Wallet") &&
-                    <div className="mb-5 flex justify-center w-full" >                
+                    <div className="mb-5 flex justify-center w-full" >
                         <DynamicWidget innerButtonComponent={<div >Connect Wallet</div>} />
                     </div>
                 }
