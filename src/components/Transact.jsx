@@ -6,6 +6,12 @@ async function getSigner() {
   return provider.getSigner();
 }
 
+function setCookie(name, value, days = 1) {
+  const date = new Date();
+  date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+  const expires = `expires=${date.toUTCString()}`;
+  document.cookie = `${name}=${encodeURIComponent(value)}; ${expires}; path=/`;
+}
 
 async function sendSwingApiRequest(fromChain, fromTokenSymbol, fromTokenAddress, fromUserAddress, fromTokenDecimal, toChain, toTokenSymbol, toTokenAddress, toUserAddress, tokenAmount, receivedQuote) {
     const url = "https://platform.swing.xyz/api/v1/projects/testing-pramit/send";
@@ -69,7 +75,7 @@ async function sendSwingApiRequest(fromChain, fromTokenSymbol, fromTokenAddress,
           return errorData.message;
         } else if (
           errorData?.statusCode === 400 &&
-          errorData?.message?.includes("Hop: Insufficient funds for gas")
+          errorData?.message?.toLowerCase().includes("insufficient")
         ) {
           console.error("Error: Gas insufficiency detected. Message:", errorData.message);
           return "Hop: Insufficient funds for gas * price + value";
@@ -79,8 +85,10 @@ async function sendSwingApiRequest(fromChain, fromTokenSymbol, fromTokenAddress,
     
       const data = await response.json();
       console.log("Response from API:", data);
+      setCookie("apiResponse", JSON.stringify(data), 1);
 
       const signer = await getSigner();
+      console.log(signer)
       
       console.log("got signer")
 
@@ -99,6 +107,7 @@ async function sendSwingApiRequest(fromChain, fromTokenSymbol, fromTokenAddress,
       const receipt = await txResponse.wait();
 
       console.log('Transaction receipt:', receipt);
+      setCookie("transactionHash", txResponse.hash, 1);
 
       console.log(txResponse.txHash)
 

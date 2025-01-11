@@ -9,6 +9,7 @@ import Affiliate from "../components/Affiliates";
 import SwapComponent from "./DashboardPages/Swap";
 import StakeComponent from "./DashboardPages/Stake";
 import WithdrawComponent from "./DashboardPages/Withdraw";
+import Support from "./DashboardPages/Support";
 
 function Dashboard() {
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
@@ -43,6 +44,7 @@ function Dashboard() {
                     <Route path="/withdraw" element={<WithdrawComponent />} />                    
                     <Route path="/fees" element={<Fees />} />
                     <Route path="/affiliate" element={<Affiliate />} />
+                    <Route path="/support" element={<Support />} />
                 </Routes>
             </main>
         </div>

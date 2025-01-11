@@ -71,10 +71,10 @@ export default function Dash() {
         { time: "2028-10-01", volume: 10000 },
         { time: "2028-11-01", volume: 10000 },
         { time: "2028-12-01", volume: 10000 },
-      ];
+    ];
 
 
-      const data1 = [
+    const data1 = [
         { time: "2024-01-01", volume: 0 },
         { time: "2024-02-01", volume: 300 },
         { time: "2024-03-01", volume: 600 },
@@ -87,10 +87,10 @@ export default function Dash() {
         { time: "2024-10-01", volume: 2800 },
         { time: "2024-11-01", volume: 3200 },
         { time: "2024-12-01", volume: 3500 },
-      ];
+    ];
 
-      
-      const data2 = [
+
+    const data2 = [
         { time: "2024-01-01", volume: 0 },
         { time: "2024-02-01", volume: 30 },
         { time: "2024-03-01", volume: 65 },
@@ -105,25 +105,25 @@ export default function Dash() {
         { time: "2024-12-01", volume: 750 },
         { time: "2025-01-01", volume: 1200 },
         { time: "2025-02-01", volume: 1600 },
-      ];
-      
-      
+    ];
+
+
     const isLoggedIn = useIsLoggedIn();
 
     return (
-        <div className="m-5">
+        <div className="p-5 bg-image-landing min-h-fit h-full dark">
             <div className="text-[15px] md:text-[25px] mb-5">Dashboard</div>
 
 
-            {!isLoggedIn ? (
+            {isLoggedIn ? (
                 <div className="flex flex-col md:flex-row gap-10 ">
-                <Card className="bg-gradient-to-tr from-[#000000] to-[#010214] p-5 flex-1 relative overflow-hidden">
-                    <div className="absolute inset-0">
-                        <div className="shimmer-border1"></div>
-                    </div>
-                    <div className="absolute inset-0">
-                        <div className="shimmer-border2"></div>
-                    </div>
+                    <Card className="p-5 flex-1 relative overflow-hidden">
+                        <div className="absolute inset-0">
+                            <div className="shimmer-border1"></div>
+                        </div>
+                        <div className="absolute inset-0">
+                            <div className="shimmer-border2"></div>
+                        </div>
                         <div className="text-[15px] md:text-[25px]">Transaction Volume</div>
                         <div className="text-[30px] md:text-[25px]">$25,000</div>
                         <ResponsiveContainer height={window.innerWidth < 768 ? 150 : 100} className="w-full">
@@ -142,13 +142,13 @@ export default function Dash() {
                         </ResponsiveContainer>
                     </Card>
 
-                    <Card className="bg-gradient-to-tr from-[#000000] to-[#010214] p-5 flex-1 relative overflow-hidden">
-                    <div className="absolute inset-0">
-                        <div className="shimmer-border1"></div>
-                    </div>
-                    <div className="absolute inset-0">
-                        <div className="shimmer-border2"></div>
-                    </div>
+                    <Card className=" p-5 flex-1 relative overflow-hidden">
+                        <div className="absolute inset-0">
+                            <div className="shimmer-border1"></div>
+                        </div>
+                        <div className="absolute inset-0">
+                            <div className="shimmer-border2"></div>
+                        </div>
                         <div className="text-[15px] md:text-[25px]">Transactions</div>
                         <div className="text-[30px] md:text-[25px]">400</div>
                         <ResponsiveContainer height={window.innerWidth < 768 ? 150 : 100} className="w-full">
@@ -167,13 +167,13 @@ export default function Dash() {
                         </ResponsiveContainer>
                     </Card>
 
-                    <Card className="bg-gradient-to-tr from-[#000000] to-[#010214] p-5 flex-1 relative overflow-hidden">
-                    <div className="absolute inset-0">
-                        <div className="shimmer-border1"></div>
-                    </div>
-                    <div className="absolute inset-0">
-                        <div className="shimmer-border2"></div>
-                    </div>
+                    <Card className="p-5 flex-1 relative overflow-hidden">
+                        <div className="absolute inset-0">
+                            <div className="shimmer-border1"></div>
+                        </div>
+                        <div className="absolute inset-0">
+                            <div className="shimmer-border2"></div>
+                        </div>
                         <div className="text-[15px] md:text-[25px]">Unique Wallets</div>
                         <div className="text-[30px] md:text-[25px]">25</div>
                         <ResponsiveContainer height={window.innerWidth < 768 ? 150 : 100} className="w-full">
@@ -193,15 +193,15 @@ export default function Dash() {
                     </Card>
                 </div>
             ) : (
-                <div className="flex flex-col md:flex-row gap-10 ">
-                <Card className="h-[200px] bg-gradient-to-tr from-[#000000] to-[#010214] p-5 flex-1 flex items-center justify-center relative overflow-hidden">
-                <div className="absolute inset-0">
-                <div className="shimmer-border1"></div>
-            </div>
-                <div className="text-center">
-                            <BarChart3Icon className="w-12 h-12 mx-auto text-white mb-4" />
-                            <div className="text-[25px] md:text-[35px] text-white mb-2">Log in to view your data</div>
-                            <div className="text-[15px] md:text-[20px] text-gray-300">Access this dashboard by signing into your account.</div>
+                <div className="flex flex-col md:flex-row gap-10">
+                    <Card className="py-[5dvh] px-5 flex-1 flex items-center justify-center relative overflow-hidden">
+                        <div className="absolute inset-0">
+                            <div className="shimmer-border1"></div>
+                        </div>
+                        <div className="text-center">
+                            <BarChart3Icon className="w-12 h-12 mx-auto mb-4" />
+                            <div className="text-[25px] md:text-[35px] mb-2">Log in to view your data</div>
+                            <div className="text-[15px] md:text-[20px]">Access this dashboard by signing into your account.</div>
                         </div>
                     </Card>
                 </div>
@@ -209,8 +209,8 @@ export default function Dash() {
 
             <div className="text-[15px] md:text-[25px] my-5">Resources</div>
 
-            <div className="flex flex-col md:flex-row gap-10 ">
-                <Card className="cursor-pointer md:hover:scale-105 bg-gradient-to-tr from-[#000000] to-[#010214] p-5 flex-1 relative overflow-hidden flex justify-center items-center">
+            <div className="flex flex-col md:flex-row gap-10 h-[100px]">
+                <Card className="cursor-pointer md:hover:scale-105 p-5 flex-1 relative overflow-hidden flex justify-center items-center">
                     <div className="absolute inset-0">
                         <div className="shimmer-border1"></div>
                     </div>
@@ -219,15 +219,15 @@ export default function Dash() {
                     </div>
 
                     <div className="w-fit mx-auto flex flex-row gap-4">
-                        <BarChart3Icon className="w-10 h-10 text-white m-auto" />
+                        <BarChart3Icon className="w-10 h-10 m-auto" />
                         <div className="">
-                            <div className="text-[15px] md:text-[15px]">Documentation</div>
+                            <div className="text-[15px] md:text-[17px] font-bold">Documentation</div>
                             <div className="text-[10px] md:text-[15px]">Explore the documentation and build</div>
                         </div>
                     </div>
                 </Card>
 
-                <Card className="cursor-pointer md:hover:scale-105 bg-gradient-to-tr from-[#000000] to-[#010214] p-5 flex-1 relative overflow-hidden flex justify-center items-center">
+                <Card className="cursor-pointer md:hover:scale-105 p-5 flex-1 relative overflow-hidden flex justify-center items-center">
                     <div className="absolute inset-0">
                         <div className="shimmer-border1"></div>
                     </div>
@@ -236,15 +236,15 @@ export default function Dash() {
                     </div>
 
                     <div className="w-fit mx-auto flex flex-row gap-4">
-                        <BarChart3Icon className="w-10 h-10 text-white m-auto" />
+                        <BarChart3Icon className="w-10 h-10 m-auto" />
                         <div className="">
-                            <div className="text-[15px] md:text-[15px]">Starter Templates</div>
+                            <div className="text-[15px] md:text-[17px] font-bold">Starter Templates</div>
                             <div className="text-[10px] md:text-[15px]">Use our quick starter templates</div>
                         </div>
                     </div>
                 </Card>
 
-                <Card className="cursor-pointer md:hover:scale-105 bg-gradient-to-tr from-[#000000] to-[#010214] p-5 flex-1 relative overflow-hidden flex justify-center items-center">
+                <Card className="cursor-pointer md:hover:scale-105 p-5 flex-1 relative overflow-hidden flex justify-center items-center">
                     <div className="absolute inset-0">
                         <div className="shimmer-border1"></div>
                     </div>
@@ -253,9 +253,9 @@ export default function Dash() {
                     </div>
 
                     <div className="w-fit mx-auto flex flex-row gap-4">
-                        <BarChart3Icon className="w-10 h-10 text-white m-auto" />
+                        <BarChart3Icon className="w-10 h-10 m-auto" />
                         <div className="">
-                            <div className="text-[15px] md:text-[15px]">Discord Community</div>
+                            <div className="text-[15px] md:text-[17px] font-bold">Discord Community</div>
                             <div className="text-[10px] md:text-[15px]">Get answers from the team and community</div>
                         </div>
                     </div>

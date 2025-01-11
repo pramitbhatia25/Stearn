@@ -434,235 +434,238 @@ const Trade = () => {
 
 
     return (
-        <Card className="light w-[350px] h-[fit] border border-gray-900">
-            <div className="flex flex-col">
-                <div className="h-fit mx-5 py-5 border-b border-black/10">
-                    <div className="mb-5 text-md font-bold">
-                        Bridge & Swap
-                    </div>
-                    <div className="flex flex-col">
-                        <div className="mb-2 flex flex-row justify-between items-center">
-                            <div className="text-xs">
-                                You Pay
+        <Card className="light min-w-[350px] w-fit h-[fit] border border-gray-900">
+            <div className="absolute -inset-1 bg-gradient-to-r from-red-500 to-purple-500 rounded-lg blur opacity-30 transition duration-500 group-hover:opacity-100"></div>
+            <div className="flex flex-col md:flex-row"> 
+                <div className="flex flex-col w-[350px]">
+                    <div className="h-fit mx-5 py-5 border-b border-black/10">
+                        <div className="mb-5 text-md font-bold">
+                            Bridge & Swap
+                        </div>
+                        <div className="flex flex-col">
+                            <div className="mb-2 flex flex-row justify-between items-center">
+                                <div className="text-xs">
+                                    You Pay
+                                </div>
+
+
+                                <ButtonGroup size="sm" className="w-fit" variant="flat">
+                                    <Button>{selectedFromWalletAddress != "Select Wallet" ? <>{selectedFromWalletAddress.slice(0, 5)} ... {selectedFromWalletAddress.slice(-5)}</> : <>Select Wallet</>}</Button>
+                                    <Dropdown placement="bottom-end">
+                                        <DropdownTrigger>
+                                            <Button isIconOnly>
+                                                <ChevronDownIcon />
+                                            </Button>
+                                        </DropdownTrigger>
+                                        <DropdownMenu
+                                            disallowEmptySelection
+                                            aria-label="Wallet Options"
+                                            selectionMode="single"
+                                            selectedKeys={new Set([selectedFromOption])}
+                                            onSelectionChange={handleFromWalletChange}
+                                        >
+                                            {userWallets.map((wallet) => (
+                                                <DropdownItem key={wallet.id}>
+                                                    {wallet.address.slice(0, 5)}...{wallet.address.slice(-5)}
+                                                </DropdownItem>
+                                            ))}
+                                        </DropdownMenu>
+                                    </Dropdown>
+                                </ButtonGroup>
+                            </div>
+                            <div className="flex flex-col gap-3">
+                                <div className="text-xs">
+
+                                    <Select
+                                        items={cryptoData}
+                                        size={"lg"}
+                                        variant="flat"
+                                        aria-label="hi"
+                                        selectedKeys={fromValue}
+                                        onSelectionChange={setFromValue}
+                                        className="w-[full]"
+                                        renderValue={(items) => {
+                                            return items.map((item) => (
+                                                <div key={item.id} className="flex gap-2 items-center p-2">
+                                                    <AvatarGroup isBordered>
+                                                        <Avatar className="flex-shrink-0 w-6 h-6" src={item.data.tokenImage} />
+                                                        <Avatar size="sm" className="flex-shrink-0 w-6 h-6" src={item.data.chainImage} />
+                                                    </AvatarGroup>
+                                                    <div className="flex flex-col">
+                                                        <span className="text-xs font-bold">{item.data.name}</span>
+                                                        <span className="text-default-700 text-xs">{item.data.chain.charAt(0).toUpperCase() + item.data.chain.slice(1)}</span>
+                                                    </div>
+                                                </div>
+                                            ));
+                                        }}
+                                    >
+                                        {(crypto) => (
+                                            <SelectItem key={crypto.id} textValue={crypto.name}>
+                                                <div className="flex gap-2 items-center p-2">
+                                                    <Avatar alt={crypto.name} className="flex-shrink-0 w-6 h-6 text-tiny" src={crypto.tokenImage} />
+                                                    <div className="flex flex-col">
+                                                        <span className="text-xs font-bold">{crypto.name}</span>
+                                                        <span className="text-tiny text-default-700">{crypto.chain.charAt(0).toUpperCase() + crypto.chain.slice(1)}</span>
+                                                    </div>
+                                                </div>
+                                            </SelectItem>
+                                        )}
+                                    </Select>
+
+                                </div>
+
+                                <div className="text-xs">
+
+                                    <Input
+                                        className="h-full"
+                                        size={"md"}
+                                        type="number"
+                                        onChange={(e) => handleFromAmountChange(e.target.value)}
+                                        value={fromAmount}
+                                        placeholder="0.00"
+                                        labelPlacement="outside"
+                                        startContent={
+                                            <div className="pointer-events-none flex items-center">
+                                                <span className="text-default-400 text-small"></span>
+                                            </div>
+                                        }
+                                    />
+
+                                </div>
+
                             </div>
 
-
-                            <ButtonGroup size="sm" className="w-fit" variant="flat">
-                                <Button>{selectedFromWalletAddress != "Select Wallet" ? <>{selectedFromWalletAddress.slice(0, 5)} ... {selectedFromWalletAddress.slice(-5)}</> : <>Select Wallet</>}</Button>
-                                <Dropdown placement="bottom-end">
-                                    <DropdownTrigger>
-                                        <Button isIconOnly>
-                                            <ChevronDownIcon />
-                                        </Button>
-                                    </DropdownTrigger>
-                                    <DropdownMenu
-                                        disallowEmptySelection
-                                        aria-label="Wallet Options"
-                                        selectionMode="single"
-                                        selectedKeys={new Set([selectedFromOption])}
-                                        onSelectionChange={handleFromWalletChange}
-                                    >
-                                        {userWallets.map((wallet) => (
-                                            <DropdownItem key={wallet.id}>
-                                                {wallet.address.slice(0, 5)}...{wallet.address.slice(-5)}
-                                            </DropdownItem>
-                                        ))}
-                                    </DropdownMenu>
-                                </Dropdown>
-                            </ButtonGroup>
                         </div>
-                        <div className="flex flex-col gap-3">
-                            <div className="text-xs">
+
+                    </div>
+                    <div className="h-fit mx-5 py-5 border-b border-black/10">
+                        <div className="flex flex-col">
+                            <div className="mb-2 flex flex-row justify-between items-center">
+                                <div className="text-xs">
+                                    You Receive
+                                </div>
+
+
+                                <ButtonGroup size="sm" className="w-fit" variant="flat">
+                                    <Button>{selectedToWalletAddress != "Select Wallet" ? <>{selectedToWalletAddress.slice(0, 5)} ... {selectedToWalletAddress.slice(-5)}</> : <>Select Wallet</>}</Button>
+                                    <Dropdown placement="bottom-end">
+                                        <DropdownTrigger>
+                                            <Button isIconOnly>
+                                                <ChevronDownIcon />
+                                            </Button>
+                                        </DropdownTrigger>
+                                        <DropdownMenu
+                                            disallowEmptySelection
+                                            aria-label="Wallet Options"
+                                            selectionMode="single"
+                                            selectedKeys={new Set([selectedToOption])}
+                                            onSelectionChange={handleToWalletChange}
+                                        >
+                                            {userWallets.map((wallet) => (
+                                                <DropdownItem key={wallet.id}>
+                                                    {wallet.address.slice(0, 5)}...{wallet.address.slice(-5)}
+                                                </DropdownItem>
+                                            ))}
+                                        </DropdownMenu>
+                                    </Dropdown>
+                                </ButtonGroup>
+                            </div>
+
+                            <div className="flex flex-col gap-3">
+                                <div className="text-xs">
+
+                                    <Select
+                                        items={cryptoData}
+                                        size={"lg"}
+                                        variant="flat"
+                                        aria-label="hi"
+                                        className="w-[full]"
+                                        selectedKeys={toValue}
+                                        onSelectionChange={setToValue}
+                                        renderValue={(items) => {
+                                            return items.map((item) => (
+                                                <div key={item.id} className="flex gap-2 items-center p-2">
+
+                                                    <AvatarGroup isBordered>
+                                                        <Avatar className="flex-shrink-0 w-6 h-6" src={item.data.tokenImage} />
+                                                        <Avatar size="sm" className="flex-shrink-0 w-6 h-6" src={item.data.chainImage} />
+                                                    </AvatarGroup>
+
+                                                    <div className="flex flex-col">
+                                                        <span className="text-xs font-bold">{item.data.name}</span>
+                                                        <span className="text-default-700 text-xs">{item.data.chain.charAt(0).toUpperCase() + item.data.chain.slice(1)}</span>
+                                                    </div>
+                                                </div>
+                                            ));
+                                        }}
+                                    >
+                                        {(crypto) => (
+                                            <SelectItem key={crypto.id} textValue={crypto.name}>
+                                                <div className="flex gap-2 items-center p-2">
+                                                    <Avatar alt={crypto.name} className="flex-shrink-0 w-6 h-6 text-tiny" src={crypto.tokenImage} />
+                                                    <div className="flex flex-col">
+                                                        <span className="text-xs font-bold">{crypto.name}</span>
+                                                        <span className="text-tiny text-default-700">{crypto.chain.charAt(0).toUpperCase() + crypto.chain.slice(1)}</span>
+                                                    </div>
+                                                </div>
+                                            </SelectItem>
+                                        )}
+                                    </Select>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <div className="w-fit">
+                        {receivedQuote && <>
+
+                            <div className="mx-5 pt-5 flex flex-row justify-between items-center">
+                                <div className="text-sm">
+                                    {allQuotes.length > 0 ? allQuotes.length : 0} routes found!
+                                </div>
+                            </div>
+
+                            <div className="mx-5 pt-5 flex flex-row justify-between items-center">
+                                <div className="text-xs">
+                                    Sort By
+                                </div>
 
                                 <Select
-                                    items={cryptoData}
-                                    size={"lg"}
-                                    variant="bordered"
-                                    aria-label="hi"
-                                    selectedKeys={fromValue}
-                                    onSelectionChange={setFromValue}
-                                    className="w-[full]"
-                                    renderValue={(items) => {
-                                        return items.map((item) => (
-                                            <div key={item.id} className="flex gap-2 items-center p-2">
-                                                <AvatarGroup isBordered>
-                                                    <Avatar className="flex-shrink-0 w-6 h-6" src={item.data.tokenImage} />
-                                                    <Avatar size="sm" className="flex-shrink-0 w-6 h-6" src={item.data.chainImage} />
-                                                </AvatarGroup>
-                                                <div className="flex flex-col">
-                                                    <span className="text-xs font-bold">{item.data.name}</span>
-                                                    <span className="text-default-700 text-xs">{item.data.chain.charAt(0).toUpperCase() + item.data.chain.slice(1)}</span>
-                                                </div>
-                                            </div>
-                                        ));
-                                    }}
+                                    size="sm"
+                                    aria-label="Select quote type"
+                                    className="w-[50%] text-xs text-[gray]"
+                                    placeholder="Select"
+                                    selectedKeys={selectedQuoteOption}
+                                    onSelectionChange={setSelectedQuoteOption}
                                 >
-                                    {(crypto) => (
-                                        <SelectItem key={crypto.id} textValue={crypto.name}>
-                                            <div className="flex gap-2 items-center p-2">
-                                                <Avatar alt={crypto.name} className="flex-shrink-0 w-6 h-6 text-tiny" src={crypto.tokenImage} />
-                                                <div className="flex flex-col">
-                                                    <span className="text-xs font-bold">{crypto.name}</span>
-                                                    <span className="text-tiny text-default-700">{crypto.chain.charAt(0).toUpperCase() + crypto.chain.slice(1)}</span>
-                                                </div>
-                                            </div>
-                                        </SelectItem>
-                                    )}
+                                    <SelectItem className="text-[gray]" key={"0"}>Lowest Fees</SelectItem>
+                                    <SelectItem className="text-[gray]" key={"1"}>Lowest Time</SelectItem>
                                 </Select>
 
                             </div>
 
-                            <div className="text-xs">
+                        </>}
+                        {loading && <>
+                            <Card className="mt-5 mx-5 p-5 w-[250px] h-[100px] flex items-center justify-center">
+                                Loading...
+                            </Card>
+                        </>}
+                        {!loading && receivedQuote && <>
+                            <QuoteCard quoteData={receivedQuote} />
+                        </>}
 
-                                <Input
-                                    className="h-full"
-                                    size={"md"}
-                                    type="number"
-                                    onChange={(e) => handleFromAmountChange(e.target.value)}
-                                    value={fromAmount}
-                                    placeholder="0.00"
-                                    labelPlacement="outside"
-                                    startContent={
-                                        <div className="pointer-events-none flex items-center">
-                                            <span className="text-default-400 text-small"></span>
-                                        </div>
-                                    }
-                                />
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
+                        {executionResult && <>                
+                            <Card className="mt-5 mx-5 p-5 h-[100px] flex items-center justify-center">
+                                {typeof executionResult === "string" ? executionResult : "Awaiting User Approval"}
+                            </Card>
+                        </>
+                        }                
                 </div>
-                <div className="h-fit mx-5 py-5 border-b border-black/10">
-                    <div className="flex flex-col">
-                        <div className="mb-2 flex flex-row justify-between items-center">
-                            <div className="text-xs">
-                                You Receive
-                            </div>
-
-
-                            <ButtonGroup size="sm" className="w-fit" variant="flat">
-                                <Button>{selectedToWalletAddress != "Select Wallet" ? <>{selectedToWalletAddress.slice(0, 5)} ... {selectedToWalletAddress.slice(-5)}</> : <>Select Wallet</>}</Button>
-                                <Dropdown placement="bottom-end">
-                                    <DropdownTrigger>
-                                        <Button isIconOnly>
-                                            <ChevronDownIcon />
-                                        </Button>
-                                    </DropdownTrigger>
-                                    <DropdownMenu
-                                        disallowEmptySelection
-                                        aria-label="Wallet Options"
-                                        selectionMode="single"
-                                        selectedKeys={new Set([selectedToOption])}
-                                        onSelectionChange={handleToWalletChange}
-                                    >
-                                        {userWallets.map((wallet) => (
-                                            <DropdownItem key={wallet.id}>
-                                                {wallet.address.slice(0, 5)}...{wallet.address.slice(-5)}
-                                            </DropdownItem>
-                                        ))}
-                                    </DropdownMenu>
-                                </Dropdown>
-                            </ButtonGroup>
-                        </div>
-
-                        <div className="flex flex-col gap-3">
-                            <div className="text-xs">
-
-                                <Select
-                                    items={cryptoData}
-                                    size={"lg"}
-                                    variant="bordered"
-                                    aria-label="hi"
-                                    className="w-[full]"
-                                    selectedKeys={toValue}
-                                    onSelectionChange={setToValue}
-                                    renderValue={(items) => {
-                                        return items.map((item) => (
-                                            <div key={item.id} className="flex gap-2 items-center p-2">
-
-                                                <AvatarGroup isBordered>
-                                                    <Avatar className="flex-shrink-0 w-6 h-6" src={item.data.tokenImage} />
-                                                    <Avatar size="sm" className="flex-shrink-0 w-6 h-6" src={item.data.chainImage} />
-                                                </AvatarGroup>
-
-                                                <div className="flex flex-col">
-                                                    <span className="text-xs font-bold">{item.data.name}</span>
-                                                    <span className="text-default-700 text-xs">{item.data.chain.charAt(0).toUpperCase() + item.data.chain.slice(1)}</span>
-                                                </div>
-                                            </div>
-                                        ));
-                                    }}
-                                >
-                                    {(crypto) => (
-                                        <SelectItem key={crypto.id} textValue={crypto.name}>
-                                            <div className="flex gap-2 items-center p-2">
-                                                <Avatar alt={crypto.name} className="flex-shrink-0 w-6 h-6 text-tiny" src={crypto.tokenImage} />
-                                                <div className="flex flex-col">
-                                                    <span className="text-xs font-bold">{crypto.name}</span>
-                                                    <span className="text-tiny text-default-700">{crypto.chain.charAt(0).toUpperCase() + crypto.chain.slice(1)}</span>
-                                                </div>
-                                            </div>
-                                        </SelectItem>
-                                    )}
-                                </Select>
-
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                {receivedQuote && <>
-
-                    <div className="mx-5 pt-5 flex flex-row justify-between items-center">
-                        <div className="text-sm">
-                            {allQuotes.length > 0 ? allQuotes.length : 0} routes found!
-                        </div>
-                    </div>
-
-                    <div className="mx-5 pt-5 flex flex-row justify-between items-center">
-                        <div className="text-xs">
-                            Sort By
-                        </div>
-
-                        <Select
-                            size="sm"
-                            aria-label="Select quote type"
-                            className="w-[50%] text-xs text-[gray]"
-                            placeholder="Select"
-                            selectedKeys={selectedQuoteOption}
-                            onSelectionChange={setSelectedQuoteOption}
-                        >
-                            <SelectItem className="text-[gray]" key={"0"}>Lowest Fees</SelectItem>
-                            <SelectItem className="text-[gray]" key={"1"}>Lowest Time</SelectItem>
-                        </Select>
-
-                    </div>
-
-                </>}
-
-                {loading && <>
-                    <Card className="mt-5 mx-5 p-5 h-[100px] flex items-center justify-center">
-                        Loading...
-                    </Card>
-                </>}
-                {!loading && receivedQuote && <>
-                    <QuoteCard quoteData={receivedQuote} />
-                </>}
-
-                {executionResult && <>                
-                    <Card className="mt-5 mx-5 p-5 h-[100px] flex items-center justify-center">
-                        {typeof executionResult === "string" ? executionResult : "Awaiting User Approval"}
-                    </Card>
-                </>
-                }
-
             </div>
-            <div className="flex mt-5 gap-4 m-auto w-[300px]">
+
+            <div className="flex mt-5 gap-4 m-auto w-[90%]">
                 {(selectedFromWalletAddress != "Select Wallet" && selectedToWalletAddress != "Select Wallet") && !receivedQuote &&
                     <Button color="secondary" variant="ghost" auto className="mb-5 py-3 px-8 w-full" onClick={() => { getQuote() }}>
                         Get Quote

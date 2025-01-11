@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Chip, Tooltip, User, Pagination, Card } from "@nextui-org/react";
 import { Area, AreaChart, ReferenceLine, ResponsiveContainer } from "recharts";
+import { useIsLoggedIn } from "@dynamic-labs/sdk-react-core";
+import { BarChart3Icon } from "lucide-react";
 
 const statusColorMap = {
   Completed: "success",
@@ -17,228 +19,228 @@ const columns = [
 ];
 
 const transactions = [
-    {
-      id: 1,
-      status: "Completed",
-      send: {
-        avatar: "https://i.pravatar.cc/150?img=3", // Updated avatar
-        name: "Ethereum",
-        subtext: "ETH Network"
-      },
-      receive: {
-        avatar: "https://i.pravatar.cc/150?img=5", // Updated avatar
-        name: "Binance Smart Chain",
-        subtext: "BSC Network"
-      },
-      amount: {
-        value: "1.5",
-        dollarValue: "$2,100"
-      },
-      bridge: {
-        avatar: "https://i.pravatar.cc/150?img=7", // Updated avatar
-        text: "AnySwap"
-      }
+  {
+    id: 1,
+    status: "Completed",
+    send: {
+      avatar: "https://i.pravatar.cc/150?img=10",
+      name: "Ethereum",
+      subtext: "ETH Network"
     },
-    {
-      id: 2,
-      status: "Pending",
-      send: {
-        avatar: "https://i.pravatar.cc/150?img=9", // Updated avatar
-        name: "Solana",
-        subtext: "SOL Network"
-      },
-      receive: {
-        avatar: "https://i.pravatar.cc/150?img=12", // Updated avatar
-        name: "Avalanche",
-        subtext: "AVAX Network"
-      },
-      amount: {
-        value: "2.0",
-        dollarValue: "$2,800"
-      },
-      bridge: {
-        avatar: "https://i.pravatar.cc/150?img=15", // Updated avatar
-        text: "Wormhole"
-      }
+    receive: {
+      avatar: "https://i.pravatar.cc/150?img=11",
+      name: "Binance Smart Chain",
+      subtext: "BSC Network"
     },
-    {
-      id: 3,
-      status: "Failed",
-      send: {
-        avatar: "https://i.pravatar.cc/150?img=18", // Updated avatar
-        name: "Polygon",
-        subtext: "MATIC Network"
-      },
-      receive: {
-        avatar: "https://i.pravatar.cc/150?img=21", // Updated avatar
-        name: "Fantom",
-        subtext: "FTM Network"
-      },
-      amount: {
-        value: "0.8",
-        dollarValue: "$1,120"
-      },
-      bridge: {
-        avatar: "https://i.pravatar.cc/150?img=25", // Updated avatar
-        text: "Multichain"
-      }
+    amount: {
+      value: "0.8",
+      dollarValue: "$1,280"
     },
-    {
-      id: 4,
-      status: "Completed",
-      send: {
-        avatar: "https://i.pravatar.cc/150?img=30", // Updated avatar
-        name: "Cardano",
-        subtext: "ADA Network"
-      },
-      receive: {
-        avatar: "https://i.pravatar.cc/150?img=33", // Updated avatar
-        name: "Tezos",
-        subtext: "XTZ Network"
-      },
-      amount: {
-        value: "5.0",
-        dollarValue: "$4,500"
-      },
-      bridge: {
-        avatar: "https://i.pravatar.cc/150?img=36", // Updated avatar
-        text: "xBridge"
-      }
+    bridge: {
+      avatar: "https://i.pravatar.cc/150?img=12",
+      text: "AnySwap"
+    }
+  },
+  {
+    id: 2,
+    status: "Pending",
+    send: {
+      avatar: "https://i.pravatar.cc/150?img=13",
+      name: "Solana",
+      subtext: "SOL Network"
     },
-    {
-      id: 5,
-      status: "Pending",
-      send: {
-        avatar: "https://i.pravatar.cc/150?img=39", // Updated avatar
-        name: "Polkadot",
-        subtext: "DOT Network"
-      },
-      receive: {
-        avatar: "https://i.pravatar.cc/150?img=42", // Updated avatar
-        name: "Tron",
-        subtext: "TRX Network"
-      },
-      amount: {
-        value: "3.2",
-        dollarValue: "$3,040"
-      },
-      bridge: {
-        avatar: "https://i.pravatar.cc/150?img=45", // Updated avatar
-        text: "ChainLink"
-      }
+    receive: {
+      avatar: "https://i.pravatar.cc/150?img=14",
+      name: "Avalanche",
+      subtext: "AVAX Network"
     },
-    {
-        id: 6,
-        status: "Pending",
-        send: {
-          avatar: "https://i.pravatar.cc/150?img=39", // Updated avatar
-          name: "Polkadot",
-          subtext: "DOT Network"
-        },
-        receive: {
-          avatar: "https://i.pravatar.cc/150?img=42", // Updated avatar
-          name: "Tron",
-          subtext: "TRX Network"
-        },
-        amount: {
-          value: "3.2",
-          dollarValue: "$3,040"
-        },
-        bridge: {
-          avatar: "https://i.pravatar.cc/150?img=45", // Updated avatar
-          text: "ChainLink"
-        }
-      },
-      {
-        id: 7,
-        status: "Pending",
-        send: {
-          avatar: "https://i.pravatar.cc/150?img=39", // Updated avatar
-          name: "Polkadot",
-          subtext: "DOT Network"
-        },
-        receive: {
-          avatar: "https://i.pravatar.cc/150?img=42", // Updated avatar
-          name: "Tron",
-          subtext: "TRX Network"
-        },
-        amount: {
-          value: "3.2",
-          dollarValue: "$3,040"
-        },
-        bridge: {
-          avatar: "https://i.pravatar.cc/150?img=45", // Updated avatar
-          text: "ChainLink"
-        }
-      },
-      {
-        id: 8,
-        status: "Pending",
-        send: {
-          avatar: "https://i.pravatar.cc/150?img=39", // Updated avatar
-          name: "Polkadot",
-          subtext: "DOT Network"
-        },
-        receive: {
-          avatar: "https://i.pravatar.cc/150?img=42", // Updated avatar
-          name: "Tron",
-          subtext: "TRX Network"
-        },
-        amount: {
-          value: "3.2",
-          dollarValue: "$3,040"
-        },
-        bridge: {
-          avatar: "https://i.pravatar.cc/150?img=45", // Updated avatar
-          text: "ChainLink"
-        }
-      },
-      {
-        id: 9,
-        status: "Pending",
-        send: {
-          avatar: "https://i.pravatar.cc/150?img=39", // Updated avatar
-          name: "Polkadot",
-          subtext: "DOT Network"
-        },
-        receive: {
-          avatar: "https://i.pravatar.cc/150?img=42", // Updated avatar
-          name: "Tron",
-          subtext: "TRX Network"
-        },
-        amount: {
-          value: "3.2",
-          dollarValue: "$3,040"
-        },
-        bridge: {
-          avatar: "https://i.pravatar.cc/150?img=45", // Updated avatar
-          text: "ChainLink"
-        }
-      },
-      {
-        id: 10,
-        status: "Pending",
-        send: {
-          avatar: "https://i.pravatar.cc/150?img=39", // Updated avatar
-          name: "Polkadot",
-          subtext: "DOT Network"
-        },
-        receive: {
-          avatar: "https://i.pravatar.cc/150?img=42", // Updated avatar
-          name: "Tron",
-          subtext: "TRX Network"
-        },
-        amount: {
-          value: "3.2",
-          dollarValue: "$3,040"
-        },
-        bridge: {
-          avatar: "https://i.pravatar.cc/150?img=45", // Updated avatar
-          text: "ChainLink"
-        }
-      },
-            ];
-  
+    amount: {
+      value: "1.3",
+      dollarValue: "$2,470"
+    },
+    bridge: {
+      avatar: "https://i.pravatar.cc/150?img=15",
+      text: "Wormhole"
+    }
+  },
+  {
+    id: 3,
+    status: "Failed",
+    send: {
+      avatar: "https://i.pravatar.cc/150?img=16",
+      name: "Polygon",
+      subtext: "MATIC Network"
+    },
+    receive: {
+      avatar: "https://i.pravatar.cc/150?img=17",
+      name: "Fantom",
+      subtext: "FTM Network"
+    },
+    amount: {
+      value: "0.6",
+      dollarValue: "$900"
+    },
+    bridge: {
+      avatar: "https://i.pravatar.cc/150?img=18",
+      text: "Multichain"
+    }
+  },
+  {
+    id: 4,
+    status: "Completed",
+    send: {
+      avatar: "https://i.pravatar.cc/150?img=19",
+      name: "Cardano",
+      subtext: "ADA Network"
+    },
+    receive: {
+      avatar: "https://i.pravatar.cc/150?img=20",
+      name: "Tezos",
+      subtext: "XTZ Network"
+    },
+    amount: {
+      value: "4.2",
+      dollarValue: "$3,780"
+    },
+    bridge: {
+      avatar: "https://i.pravatar.cc/150?img=21",
+      text: "xBridge"
+    }
+  },
+  {
+    id: 5,
+    status: "Pending",
+    send: {
+      avatar: "https://i.pravatar.cc/150?img=22",
+      name: "Polkadot",
+      subtext: "DOT Network"
+    },
+    receive: {
+      avatar: "https://i.pravatar.cc/150?img=23",
+      name: "Tron",
+      subtext: "TRX Network"
+    },
+    amount: {
+      value: "2.7",
+      dollarValue: "$2,565"
+    },
+    bridge: {
+      avatar: "https://i.pravatar.cc/150?img=24",
+      text: "ChainLink"
+    }
+  },
+  {
+    id: 6,
+    status: "Pending",
+    send: {
+      avatar: "https://i.pravatar.cc/150?img=25",
+      name: "Stellar",
+      subtext: "XLM Network"
+    },
+    receive: {
+      avatar: "https://i.pravatar.cc/150?img=26",
+      name: "NEAR Protocol",
+      subtext: "NEAR Network"
+    },
+    amount: {
+      value: "3.1",
+      dollarValue: "$4,030"
+    },
+    bridge: {
+      avatar: "https://i.pravatar.cc/150?img=27",
+      text: "Rainbow Bridge"
+    }
+  },
+  {
+    id: 7,
+    status: "Pending",
+    send: {
+      avatar: "https://i.pravatar.cc/150?img=28",
+      name: "Cosmos",
+      subtext: "ATOM Network"
+    },
+    receive: {
+      avatar: "https://i.pravatar.cc/150?img=29",
+      name: "Algorand",
+      subtext: "ALGO Network"
+    },
+    amount: {
+      value: "1.8",
+      dollarValue: "$2,160"
+    },
+    bridge: {
+      avatar: "https://i.pravatar.cc/150?img=30",
+      text: "Gravity Bridge"
+    }
+  },
+  {
+    id: 8,
+    status: "Failed",
+    send: {
+      avatar: "https://i.pravatar.cc/150?img=31",
+      name: "VeChain",
+      subtext: "VET Network"
+    },
+    receive: {
+      avatar: "https://i.pravatar.cc/150?img=32",
+      name: "Hedera",
+      subtext: "HBAR Network"
+    },
+    amount: {
+      value: "2.5",
+      dollarValue: "$1,750"
+    },
+    bridge: {
+      avatar: "https://i.pravatar.cc/150?img=33",
+      text: "ZBridge"
+    }
+  },
+  {
+    id: 9,
+    status: "Completed",
+    send: {
+      avatar: "https://i.pravatar.cc/150?img=34",
+      name: "Zilliqa",
+      subtext: "ZIL Network"
+    },
+    receive: {
+      avatar: "https://i.pravatar.cc/150?img=35",
+      name: "Elrond",
+      subtext: "EGLD Network"
+    },
+    amount: {
+      value: "6.0",
+      dollarValue: "$6,000"
+    },
+    bridge: {
+      avatar: "https://i.pravatar.cc/150?img=36",
+      text: "OmniBridge"
+    }
+  },
+  {
+    id: 10,
+    status: "Pending",
+    send: {
+      avatar: "https://i.pravatar.cc/150?img=37",
+      name: "Harmony",
+      subtext: "ONE Network"
+    },
+    receive: {
+      avatar: "https://i.pravatar.cc/150?img=38",
+      name: "EOS",
+      subtext: "EOS Network"
+    },
+    amount: {
+      value: "5.4",
+      dollarValue: "$4,590"
+    },
+    bridge: {
+      avatar: "https://i.pravatar.cc/150?img=39",
+      text: "BridgeX"
+    }
+  }
+];
+
 export default function Fees() {
   const renderCell = React.useCallback((transaction, columnKey) => {
     const cellValue = transaction[columnKey];
@@ -252,8 +254,8 @@ export default function Fees() {
         );
       case "send":
         return (
-            <User
-            avatarProps={{radius: "lg", src: transaction.send.avatar}}
+          <User
+            avatarProps={{ radius: "lg", src: transaction.send.avatar }}
             description={transaction.send.subtext}
             name={transaction.send.name}
           >
@@ -262,8 +264,8 @@ export default function Fees() {
         );
       case "receive":
         return (
-            <User
-            avatarProps={{radius: "lg", src: transaction.receive.avatar}}
+          <User
+            avatarProps={{ radius: "lg", src: transaction.receive.avatar }}
             description={transaction.receive.subtext}
             name={transaction.receive.name}
           >
@@ -279,8 +281,8 @@ export default function Fees() {
         );
       case "bridge":
         return (
-            <User
-            avatarProps={{radius: "lg", src: transaction.bridge.avatar}}
+          <User
+            avatarProps={{ radius: "lg", src: transaction.bridge.avatar }}
             name={transaction.bridge.text}
           >
             {transaction.bridge.text}
@@ -398,7 +400,7 @@ export default function Fees() {
     { time: "2024-12-01", volume: 3500 },
   ];
 
-  
+
   const data2 = [
     { time: "2024-01-01", volume: 0 },
     { time: "2024-02-01", volume: 30 },
@@ -416,131 +418,161 @@ export default function Fees() {
     { time: "2025-02-01", volume: 1600 },
   ];
 
+  const isLoggedIn = useIsLoggedIn();
 
   return (
-    <div className="m-5">
+    <div className="p-5 bg-image-landing min-h-fit h-full dark ">
     <div className="text-[15px] md:text-[25px] mb-5">Fees</div>
+    {!isLoggedIn ? (
+        <>
+          <div className="flex flex-col md:flex-row gap-10">
+            <Card className="py-[5dvh] px-5 flex-1 flex items-center justify-center relative overflow-hidden">
+              <div className="absolute inset-0">
+                <div className="shimmer-border1"></div>
+              </div>
+              <div className="text-center">
+                <BarChart3Icon className="w-12 h-12 mx-auto mb-4" />
+                <div className="text-[25px] md:text-[35px] mb-2">Log in to view your data</div>
+                <div className="text-[15px] md:text-[20px]">Access this dashboard by signing into your account.</div>
+              </div>
+            </Card>
+          </div>
+        </>
+      ) : (
+        <>
 
-    <div className="flex flex-col md:flex-row gap-10 ">
-    <Card className="bg-gradient-to-tr from-[#000000] to-[#010214] p-5 flex-1 relative overflow-hidden">
-        <div className="absolute inset-0">
-            <div className="shimmer-border1"></div>
-        </div>
-        <div className="absolute inset-0">
-            <div className="shimmer-border2"></div>
-        </div>
-            <div className="text-[15px] md:text-[25px]">Transaction Volume</div>
-            <div className="text-[30px] md:text-[25px]">$25,000</div>
-            <ResponsiveContainer height={window.innerWidth < 768 ? 150 : 100} className="w-full">
+          <div className="flex flex-col md:flex-row gap-10 ">
+            <Card className="p-5 flex-1 relative overflow-hidden">
+              <div className="absolute inset-0">
+                <div className="shimmer-border1"></div>
+              </div>
+              <div className="absolute inset-0">
+                <div className="shimmer-border2"></div>
+              </div>
+              <div className="text-[15px] md:text-[25px]">Transaction Volume</div>
+              <div className="text-[30px] md:text-[25px]">$25,000</div>
+              <ResponsiveContainer height={window.innerWidth < 768 ? 150 : 100} className="w-full">
                 <AreaChart
-                    data={data}
-                    margin={{
-                        top: 20,
-                        right: 30,
-                        left: 0,
-                        bottom: 20,
-                    }}
+                  data={data}
+                  margin={{
+                    top: 20,
+                    right: 30,
+                    left: 0,
+                    bottom: 20,
+                  }}
                 >
-                    <Area type="monotone" dataKey="volume" stroke="#8884d8" fill="#8884d8" />
-                    <ReferenceLine y={0} stroke="#000" />
+                  <Area type="monotone" dataKey="volume" stroke="#8884d8" fill="#8884d8" />
+                  <ReferenceLine y={0} stroke="#000" />
                 </AreaChart>
-            </ResponsiveContainer>
-        </Card>
+              </ResponsiveContainer>
+            </Card>
 
-        <Card className="bg-gradient-to-tr from-[#000000] to-[#010214] p-5 flex-1 relative overflow-hidden">
-        <div className="absolute inset-0">
-            <div className="shimmer-border1"></div>
-        </div>
-        <div className="absolute inset-0">
-            <div className="shimmer-border2"></div>
-        </div>
-            <div className="text-[15px] md:text-[25px]">Transactions</div>
-            <div className="text-[30px] md:text-[25px]">400</div>
-            <ResponsiveContainer height={window.innerWidth < 768 ? 150 : 100} className="w-full">
+            <Card className="p-5 flex-1 relative overflow-hidden">
+              <div className="absolute inset-0">
+                <div className="shimmer-border1"></div>
+              </div>
+              <div className="absolute inset-0">
+                <div className="shimmer-border2"></div>
+              </div>
+              <div className="text-[15px] md:text-[25px]">Transactions</div>
+              <div className="text-[30px] md:text-[25px]">400</div>
+              <ResponsiveContainer height={window.innerWidth < 768 ? 150 : 100} className="w-full">
                 <AreaChart
-                    data={data1}
-                    margin={{
-                        top: 20,
-                        right: 30,
-                        left: 0,
-                        bottom: 20,
-                    }}
+                  data={data1}
+                  margin={{
+                    top: 20,
+                    right: 30,
+                    left: 0,
+                    bottom: 20,
+                  }}
                 >
-                    <Area type="monotone" dataKey="volume" stroke="#8884d8" fill="#8884d8" />
-                    <ReferenceLine y={0} stroke="#000" />
+                  <Area type="monotone" dataKey="volume" stroke="#8884d8" fill="#8884d8" />
+                  <ReferenceLine y={0} stroke="#000" />
                 </AreaChart>
-            </ResponsiveContainer>
-        </Card>
+              </ResponsiveContainer>
+            </Card>
 
-        <Card className="bg-gradient-to-tr from-[#000000] to-[#010214] p-5 flex-1 relative overflow-hidden">
-        <div className="absolute inset-0">
-            <div className="shimmer-border1"></div>
-        </div>
-        <div className="absolute inset-0">
-            <div className="shimmer-border2"></div>
-        </div>
-            <div className="text-[15px] md:text-[25px]">Unique Wallets</div>
-            <div className="text-[30px] md:text-[25px]">25</div>
-            <ResponsiveContainer height={window.innerWidth < 768 ? 150 : 100} className="w-full">
+            <Card className="p-5 flex-1 relative overflow-hidden">
+              <div className="absolute inset-0">
+                <div className="shimmer-border1"></div>
+              </div>
+              <div className="absolute inset-0">
+                <div className="shimmer-border2"></div>
+              </div>
+              <div className="text-[15px] md:text-[25px]">Unique Wallets</div>
+              <div className="text-[30px] md:text-[25px]">25</div>
+              <ResponsiveContainer height={window.innerWidth < 768 ? 150 : 100} className="w-full">
                 <AreaChart
-                    data={data2}
-                    margin={{
-                        top: 20,
-                        right: 30,
-                        left: 0,
-                        bottom: 20,
-                    }}
+                  data={data2}
+                  margin={{
+                    top: 20,
+                    right: 30,
+                    left: 0,
+                    bottom: 20,
+                  }}
                 >
-                    <Area type="monotone" dataKey="volume" stroke="#8884d8" fill="#8884d8" />
-                    <ReferenceLine y={0} stroke="#000" />
+                  <Area type="monotone" dataKey="volume" stroke="#8884d8" fill="#8884d8" />
+                  <ReferenceLine y={0} stroke="#000" />
                 </AreaChart>
-            </ResponsiveContainer>
-        </Card>
-    </div>
+              </ResponsiveContainer>
+            </Card>
+          </div>
 
-    <div className="text-[15px] md:text-[25px] my-5">Widthdrawals</div>
+          <div className="text-[15px] md:text-[25px] my-5">Widthdrawals</div>
 
-    <Table 
-        isStriped
-        aria-label="Transaction Table"
-        checkboxesProps={{
-            classNames: {
-              wrapper: "after:bg-foreground after:text-background text-background",
-            },
-          }}
-        classNames={classNames}
-        bottomContent={
-            <div className="flex w-full justify-center">
-            <Pagination
-                isCompact
-                showControls
-                showShadow
-                color="secondary"
-                page={page}
-                total={pages}
-                onChange={(page) => setPage(page)}
-            />
+          <Card className="p-5 flex-1 relative overflow-hidden">
+            <div className="absolute inset-0">
+              <div className="shimmer-border1"></div>
             </div>
-        }
-      >
-        <TableHeader columns={columns}>
-          {(column) => (
-            <TableColumn key={column.uid}
-            allowsSorting={column.sortable}
-            
-            align={column.uid === "bridge" ? "center" : "start"}>
-              {column.name}
-            </TableColumn>
-          )}
-        </TableHeader>
-        <TableBody items={items} >
-          {(item) => (
-            <TableRow key={item.id} >
-              {(columnKey) => <TableCell className="">{renderCell(item, columnKey)}</TableCell>}
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+            <div className="absolute inset-0">
+              <div className="shimmer-border2"></div>
+            </div>
+            <Table
+              isStriped
+              removeWrapper
+              aria-label="Transaction Table"
+              checkboxesProps={{
+                classNames: {
+                  wrapper: "after:bg-foreground after:text-background text-background",
+                },
+              }}
+              classNames={classNames}
+              bottomContent={
+                <div className="flex w-full justify-center">
+                  <Pagination
+                    isCompact
+                    showControls
+                    showShadow
+                    color="secondary"
+                    page={page}
+                    total={pages}
+                    onChange={(page) => setPage(page)}
+                  />
+                </div>
+              }
+            >
+              <TableHeader columns={columns}>
+                {(column) => (
+                  <TableColumn key={column.uid}
+                    allowsSorting={column.sortable}
+
+                    align={column.uid === "bridge" ? "center" : "start"}>
+                    {column.name}
+                  </TableColumn>
+                )}
+              </TableHeader>
+              <TableBody items={items} >
+                {(item) => (
+                  <TableRow key={item.id} >
+                    {(columnKey) => <TableCell className="">{renderCell(item, columnKey)}</TableCell>}
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </Card>
+        </>
+      )}
+
     </div>
   );
 }

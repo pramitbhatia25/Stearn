@@ -43,8 +43,7 @@ const Sidebar = ({collapsed, setIsSidebarCollapsed, onToggleCollapse}) => {
         "/dashboard/swap",
         "/dashboard/stake",
         "/dashboard/withdraw",
-        "/account",
-        "/support",
+        "/dashboard/support",
       ];
   
       const matchedRoute = routes.find((route) =>
@@ -65,10 +64,10 @@ const Sidebar = ({collapsed, setIsSidebarCollapsed, onToggleCollapse}) => {
   return (
     <div
     >
-      <div className={`h-[10dvh] max-h-[70px] flex items-center ${collapsed ? 'justify-center' : 'justify-between'} border-b border-gray-800`}>
+      <div className={` h-[10dvh] max-h-[70px] flex items-center ${collapsed ? 'justify-center' : 'justify-between'} border-b border-gray-800`}>
       {!collapsed && (
         <div
-        onClick={() => {window.location = "http://localhost:5173/"}}
+        onClick={() => {window.location = "http://stearn.link/"}}
           className="cursor-pointer m-0 px-4 font-bold text-white text-xl hover:scale-[1.05] transition-transform duration-200 ease-in-out"
         >
           Stearn
@@ -94,7 +93,7 @@ const Sidebar = ({collapsed, setIsSidebarCollapsed, onToggleCollapse}) => {
           <SidebarItem icon={Home} label="Dashboard" to="/dashboard" collapsed={collapsed} />
           <SidebarItem icon={ArrowLeftRight} label="Transactions" to="/dashboard/transactions" collapsed={collapsed} />
           <SidebarItem icon={DollarSign} label="Fees" to="/dashboard/fees" collapsed={collapsed} />
-          <SidebarItem icon={UsersRound} label="Affiliate" to="/dashboard/affiliate" collapsed={collapsed} />
+{/*          <SidebarItem icon={UsersRound} label="Affiliate" to="/dashboard/affiliate" collapsed={collapsed} />*/}
         </div>
         <div className="py-3 text-center">
           {!collapsed && (
@@ -112,8 +111,8 @@ const Sidebar = ({collapsed, setIsSidebarCollapsed, onToggleCollapse}) => {
               Settings
             </h3>
           )}
-          <SidebarItem icon={CircleUserRound} label="Account" to="/account" collapsed={collapsed} />
-          <SidebarItem icon={MessageCircleQuestion} label="Support" to="/support" collapsed={collapsed} />
+{/*          <SidebarItem icon={CircleUserRound} label="Account" to="/account" collapsed={collapsed} />*/}
+          <SidebarItem icon={MessageCircleQuestion} label="Support" to="/dashboard/support" collapsed={collapsed} />
         </div>
       </nav>
     </div>
