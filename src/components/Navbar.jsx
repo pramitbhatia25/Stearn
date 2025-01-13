@@ -45,7 +45,9 @@ export default function CustomNavbar() {
         <a href="mailto:hello@stearn.link">
         <ImMail className="w-6 h-6 cursor-pointer hover:scale-[1.1] transition-transform duration-200 ease-in-out" />
         </a>
-      </NavbarContent>
+        <IoIosApps className="w-6 h-6 cursor-pointer hover:scale-[1.1] transition-transform duration-200 ease-in-out" onClick={() => { navigate("/dashboard") }} />
+
+        </NavbarContent>
     </Navbar>
   );
 }
