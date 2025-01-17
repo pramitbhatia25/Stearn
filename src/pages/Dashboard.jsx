@@ -17,7 +17,7 @@ function Dashboard() {
     return (
         <div className="flex w-full h-[100dvh] overflow-hidden">
             <div
-                className={`flex flex-col h-[100dvh] overflow-y-auto transition-all duration-300 border-r border-gray-800 flex-shrink-0 ${
+                className={`flex flex-col h-[100dvh] overflow-y-auto transition-all duration-300  flex-shrink-0 ${
                     isSidebarCollapsed
                         ? 'w-[100px] md:w-[80px]'
                         : 'w-[100dvw] md:w-[15dvw] md:min-w-[150px]'
@@ -30,12 +30,11 @@ function Dashboard() {
                 />
             </div>
 
-            <main className={`flex-1 overflow-y-auto overflow-x-hidden scroll-auto ${
+            <main className={`flex-1 overflow-y-auto my-5 mx-[1.25dvw] overflow-x-hidden scroll-auto border border-gray-800 rounded-lg ${
                 isSidebarCollapsed
                     ? 'w-[calc(100dvw-100px)] md:w-[calc(100dvw-100px)]'
-                    : 'w-[calc(100dvw-100dvw)] md:w-[calc(100dvw-15dvw)]'
+                    : 'w-[calc(100dvw-100dvw)] md:w-[calc(100dvw-17.5dvw)]'
             }`}>
-                <LayoutNavbar />
                 <Routes>
                     <Route path="/" element={<Dash />} />
                     <Route path="/transactions" element={<Transactions />} />
