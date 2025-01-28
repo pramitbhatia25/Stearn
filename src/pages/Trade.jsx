@@ -440,7 +440,7 @@ const Trade = () => {
                 <div className="flex flex-col w-[350px]">
                     <div className="h-fit mx-5 py-5 border-b border-black/10">
                         <div className="mb-5 text-md font-bold">
-                            Bridge & Swap
+                           Swap With Stearn
                         </div>
                         <div className="flex flex-col">
                             <div className="mb-2 flex flex-row justify-between items-center">
@@ -619,34 +619,6 @@ const Trade = () => {
                     </div>
                 </div>
                     <div className="w-fit">
-                        {receivedQuote && <>
-
-                            <div className="mx-5 pt-5 flex flex-row justify-between items-center">
-                                <div className="text-sm">
-                                    {allQuotes.length > 0 ? allQuotes.length : 0} routes found!
-                                </div>
-                            </div>
-
-                            <div className="mx-5 pt-5 flex flex-row justify-between items-center">
-                                <div className="text-xs">
-                                    Sort By
-                                </div>
-
-                                <Select
-                                    size="sm"
-                                    aria-label="Select quote type"
-                                    className="w-[50%] text-xs text-[gray]"
-                                    placeholder="Select"
-                                    selectedKeys={selectedQuoteOption}
-                                    onSelectionChange={setSelectedQuoteOption}
-                                >
-                                    <SelectItem className="text-[gray]" key={"0"}>Lowest Fees</SelectItem>
-                                    <SelectItem className="text-[gray]" key={"1"}>Lowest Time</SelectItem>
-                                </Select>
-
-                            </div>
-
-                        </>}
                         {loading && <>
                             <Card className="mt-5 mx-5 p-5 w-[250px] h-[100px] flex items-center justify-center">
                                 Loading...
@@ -690,3 +662,33 @@ const Trade = () => {
 };
 
 export default Trade;
+
+
+// {receivedQuote && <>
+
+//     <div className="mx-5 pt-5 flex flex-row justify-between items-center">
+//         <div className="text-sm">
+//             {allQuotes.length > 0 ? allQuotes.length : 0} routes found!
+//         </div>
+//     </div>
+
+//     <div className="mx-5 pt-5 flex flex-row justify-between items-center">
+//         <div className="text-xs">
+//             Sort By
+//         </div>
+
+//         <Select
+//             size="sm"
+//             aria-label="Select quote type"
+//             className="w-[50%] text-xs text-[gray]"
+//             placeholder="Select"
+//             selectedKeys={selectedQuoteOption}
+//             onSelectionChange={setSelectedQuoteOption}
+//         >
+//             <SelectItem className="text-[gray]" key={"0"}>Lowest Fees</SelectItem>
+//             <SelectItem className="text-[gray]" key={"1"}>Lowest Time</SelectItem>
+//         </Select>
+
+//     </div>
+
+// </>}

@@ -13,6 +13,7 @@ import { EthereumWalletConnectors } from "@dynamic-labs/ethereum";
 import { FlowWalletConnectors } from "@dynamic-labs/flow";
 import { SolanaWalletConnectors } from "@dynamic-labs/solana";
 import { StarknetWalletConnectors } from "@dynamic-labs/starknet";
+import MainSwapComponent from "./pages/MainSwap";
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
           <Router>
           <Routes>
             <Route path="/" element={<LandingPage />}></Route>
+            <Route path="/app" element={<MainSwapComponent/>}></Route>
             <Route path="/dashboard/*" element={<Dashboard />}></Route>
           </Routes>
         </Router>

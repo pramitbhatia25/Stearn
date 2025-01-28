@@ -29,10 +29,10 @@ export default function CustomNavbar() {
   )
   
   return (
-    <Navbar className="z-[2] h-[10dvh] w-[90dvw] md:w-[96dvw] max-h-[70px] my-[2dvh] mx-[5dvw] md:mx-[2dvw] bg-white/10 backdrop-blur-md shadow-lg rounded-xl border border-white/20" maxWidth="xl">
+    <Navbar className="z-[2] h-[10dvh] w-[90dvw] md:w-[96dvw] my-[2dvh] mx-[5dvw] md:mx-[2dvw] bg-white/10 backdrop-blur-md shadow-lg rounded-xl border border-white/20 overflow-hidden" maxWidth="xl">
 
-      <NavbarContent justify="start">
-        <SideBarButtonImg/>
+      <NavbarContent justify="start" onClick={() => {navigate("/")}}>
+        <SideBarButtonImg />
       </NavbarContent>
 
       <NavbarContent justify="end">
@@ -45,7 +45,6 @@ export default function CustomNavbar() {
         <a href="mailto:hello@stearn.link">
         <ImMail className="w-6 h-6 cursor-pointer hover:scale-[1.1] transition-transform duration-200 ease-in-out" />
         </a>
-        <IoIosApps className="w-6 h-6 cursor-pointer hover:scale-[1.1] transition-transform duration-200 ease-in-out" onClick={() => { navigate("/dashboard") }} />
 
         </NavbarContent>
     </Navbar>
