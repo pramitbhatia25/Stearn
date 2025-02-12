@@ -8,9 +8,12 @@ function MainSwapComponent() {
     </div>
 
     <div className=" pt-[14dvh] min-h-[100dvh]">
-      <div className='flex justify-center items-center light h-fit my-[5dvh]'>
-        <Trade />
+      <div className='flex justify-center items-center light h-fit my-[5dvh] w-full'>
+        <div className="max-w-[350px]">
+          <Trade />
+        </div>
       </div>
-    </div>  </div>
+    </div>
+  </div>
 }
 export default MainSwapComponent;

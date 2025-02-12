@@ -434,10 +434,10 @@ const Trade = () => {
 
 
     return (
-        <Card className="light min-w-[350px] w-fit h-[fit] border border-gray-900">
+        <Card className="light min-w-[350px] w-full h-fit border border-gray-900">
             <div className="absolute -inset-1 bg-gradient-to-r from-red-500 to-purple-500 rounded-lg blur opacity-30 transition duration-500 group-hover:opacity-100"></div>
-            <div className="flex flex-col md:flex-row"> 
-                <div className="flex flex-col w-[350px]">
+            <div className="flex flex-col"> 
+                <div className="flex flex-col w-full">
                     <div className="h-fit mx-5 py-5 border-b border-black/10">
                         <div className="mb-5 text-md font-bold">
                            Swap With Stearn
@@ -618,7 +618,7 @@ const Trade = () => {
                         </div>
                     </div>
                 </div>
-                    <div className="w-fit">
+                    <div className="w-fit mx-auto">
                         {loading && <>
                             <Card className="mt-5 mx-5 p-5 w-[250px] h-[100px] flex items-center justify-center">
                                 Loading...

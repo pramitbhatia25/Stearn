@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import "./app.css";
 import Dashboard from "./pages/Dashboard";
+import NewDashboard from "./pages/NewDashboard";
 import {
   DynamicContextProvider,
 } from "@dynamic-labs/sdk-react-core";
@@ -19,29 +20,30 @@ import MainSwapComponent from "./pages/MainSwap";
 function App() {
 
   return (
-        <DynamicContextProvider
-          settings={{
-            environmentId: "b729ee28-b174-4641-8419-f946ccc04243",
-            walletConnectors: [
-              AlgorandWalletConnectors,
-              BitcoinWalletConnectors,
-              CosmosWalletConnectors,
-              EclipseWalletConnectors,
-              EthereumWalletConnectors,
-              FlowWalletConnectors,
-              SolanaWalletConnectors,
-              StarknetWalletConnectors,
-            ],
-            }}
-        >
-          <Router>
-          <Routes>
-            <Route path="/" element={<LandingPage />}></Route>
-            <Route path="/app" element={<MainSwapComponent/>}></Route>
-            <Route path="/dashboard/*" element={<Dashboard />}></Route>
-          </Routes>
-        </Router>
-            </DynamicContextProvider>    
+    <DynamicContextProvider
+      settings={{
+        environmentId: "b729ee28-b174-4641-8419-f946ccc04243",
+        walletConnectors: [
+          AlgorandWalletConnectors,
+          BitcoinWalletConnectors,
+          CosmosWalletConnectors,
+          EclipseWalletConnectors,
+          EthereumWalletConnectors,
+          FlowWalletConnectors,
+          SolanaWalletConnectors,
+          StarknetWalletConnectors,
+        ],
+      }}
+    >
+      <Router>
+        <Routes>
+          <Route path="/" element={<LandingPage />}></Route>
+          <Route path="/research" element={<NewDashboard />}></Route>
+          <Route path="/trade" element={<MainSwapComponent />}></Route>
+          <Route path="/dashboard/*" element={<Dashboard />}></Route>
+        </Routes>
+      </Router>
+    </DynamicContextProvider>
   );
 }
 
