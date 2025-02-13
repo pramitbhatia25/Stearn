@@ -68,3 +68,4 @@ export default function CustomNavbar({ widget = false }) {
     </Navbar>
   );
 }
+

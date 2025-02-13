@@ -52,7 +52,7 @@ function Footer() {
                 <div className="flex flex-col md:flex-row items-center justify-center">
                     <div className="flex flex-col items-center justify-center w-[85%] px-5">
 
-                        <div className="z-[3] text-white text-lg md:text-2xl text-center  w-full md:w-[80%]">
+                        <div className="z-[3] text-white text-lg md:text-xl text-center  w-full md:w-[80%]">
                             AI-powered analytics to help you spot the next big opportunity. <br /> Launching Soon 😉.
                         </div>
 
