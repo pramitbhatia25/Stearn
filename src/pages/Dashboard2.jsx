@@ -6,7 +6,7 @@ import { AdvancedRealTimeChart, TechnicalAnalysis } from "react-ts-tradingview-w
 import NewCharts from "./NewDashboardPages/RowCharts";
 import Chat from "./NewDashboardPages/Chat";
 
-function NewDashboard() {
+function Dashboard2() {
 
   const coins = ["SOLUSD", "BTCUSD", "ETHUSD", "BNBUSDT", "XRPUSDT", "DOGEUSDT", "ADAUSDT", "DOTUSDT", "USDC.D", "USDT.D", "LINKUSD", "TRXUSD.P", "AVAXUSDT", "SHIBUSDT", "TONUSDT", "LTCUSDT.P", "HBARUSDT", "DOTUSDT", "HYPEUSD"];
   const [selectedKeys, setSelectedKeys] = useState(new Set(["1"]));
@@ -52,4 +52,4 @@ function NewDashboard() {
 
   </div>
 }
-export default NewDashboard;
+export default Dashboard2;

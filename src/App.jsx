@@ -2,7 +2,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import "./app.css";
 import Dashboard from "./pages/Dashboard";
-import NewDashboard from "./pages/NewDashboard";
+import Dashboard2 from "./pages/Dashboard2";
+import Dashboard3 from "./pages/Dashboard3";
 import {
   DynamicContextProvider,
 } from "@dynamic-labs/sdk-react-core";
@@ -38,7 +39,8 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<LandingPage />}></Route>
-          <Route path="/research" element={<NewDashboard />}></Route>
+          <Route path="/research" element={<Dashboard2 />}></Route>
+          <Route path="/research3/BTC" element={<Dashboard3 />}></Route>
           <Route path="/trade" element={<MainSwapComponent />}></Route>
           <Route path="/dashboard/*" element={<Dashboard />}></Route>
         </Routes>
